@@ -336,3 +336,42 @@ export const AREA_WEIGHTS = [
   { area: 'Basic Python logic', weight: 3, focus: 'Dict/list ops, comprehensions, string handling' },
   { area: 'Hard algorithms', weight: 1, focus: 'Almost none — not SWE role' },
 ]
+
+// ─── HOW TO UPDATE DAILY ──────────────────────────────────────────────────────
+//
+// Current day auto-tracks from START_DATE in app/page.tsx — no edits needed.
+//
+// Mark problem done → click checkbox in dashboard (localStorage, instant).
+// Mark gate passed  → click "Mark passed" in Gates panel (localStorage, instant).
+//
+// New mistake after session → copy template below into MISTAKES array above,
+// fill in the fields, then: git add -A && git push
+// Vercel redeploys in ~30s automatically.
+//
+// ─── NEW MISTAKE TEMPLATE ─────────────────────────────────────────────────────
+//
+// {
+//   id: 'ML-007',                          // next sequential ID
+//   problem: '#X Problem Name',
+//   date: '2026-XX-XX',
+//   week: 'Week X, Day X',
+//   status: 'active',                      // active | gated | remediated
+//   bugs: [
+//     { line: 'the_bad_code', explanation: 'what went wrong and why' },
+//   ],
+//   rootCause: 'One sentence: what mental model was missing.',
+//   remediation: [
+//     'Specific action to fix it',
+//     'Write from memory N times',
+//   ],
+//   remediationDone: [false, false],        // one false per remediation item
+// },
+//
+// ─── NEW PROBLEM TEMPLATE ─────────────────────────────────────────────────────
+//
+// To mark a problem solved, click the checkbox in the dashboard.
+// To add a new problem to the curriculum, add to the relevant week/day above:
+//
+// { id: 'w1d2-4', leetcode: 219, title: 'Contains Duplicate II',
+//   pattern: 'Sliding window + set', paRelevance: 'Session-based dedup',
+//   status: 'pending', url: 'https://leetcode.com/problems/contains-duplicate-ii/' },
