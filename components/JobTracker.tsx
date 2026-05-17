@@ -77,7 +77,7 @@ export function JobTracker({ jobs, onAdd, onUpdateStatus, onUpdate, onDelete }: 
         {showForm && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }} className="overflow-hidden mb-4">
-            <div className="rounded-xl border p-4 flex flex-col gap-3" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-bright)' }}>
+            <div className="rounded-xl p-4 flex flex-col gap-3" style={{ background: 'var(--bg-glass)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid var(--border-bright)', boxShadow: '0 0 24px rgba(79,142,247,0.08)' }}>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-mono mb-1 block" style={{ color: 'var(--ink-faint)' }}>Company *</label>
@@ -153,7 +153,7 @@ export function JobTracker({ jobs, onAdd, onUpdateStatus, onUpdate, onDelete }: 
 
       {/* Job cards */}
       {filtered.length === 0 ? (
-        <div className="rounded-xl border p-8 text-center" style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+        <div className="rounded-xl p-8 text-center" style={{ background: 'var(--bg-glass)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid var(--border)' }}>
           <div className="text-2xl mb-2">🎯</div>
           <div className="text-sm" style={{ color: 'var(--ink-dim)' }}>No opportunities yet.</div>
           <div className="text-xs mt-1" style={{ color: 'var(--ink-faint)' }}>Add your first target company above.</div>
@@ -165,7 +165,7 @@ export function JobTracker({ jobs, onAdd, onUpdateStatus, onUpdate, onDelete }: 
             const isExpanded = expandedId === job.id
             return (
               <motion.div key={job.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
-                className="rounded-xl border overflow-hidden" style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+                className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-glass)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid var(--border)', transition: 'border-color 0.2s' }}>
                 <div className="flex items-center gap-3 px-4 py-3">
                   {/* Status dot */}
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: meta.color }} />

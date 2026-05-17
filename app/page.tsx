@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'motion/react'
 import { GATES, MISTAKES, WEEKS, SESSION_STEPS, HABIT_STACK, AREA_WEIGHTS } from '@/lib/data'
 import { useStore } from '@/lib/store'
 import { Header } from '@/components/Header'
@@ -54,20 +55,23 @@ export default function Dashboard() {
       <Header streak={state.streak} currentWeek={CURRENT_WEEK} currentDay={CURRENT_DAY} />
 
       {/* Tab nav */}
-      <div className="flex items-center gap-0 border-b px-6" style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-center gap-1 border-b px-6" style={{ borderColor: 'var(--border)', background: 'rgba(6,6,9,0.6)' }}>
         {TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className="px-4 py-2.5 text-xs font-mono uppercase tracking-widest cursor-pointer transition-colors relative"
+            className="relative px-4 py-3 text-xs font-mono uppercase tracking-widest cursor-pointer transition-all duration-200"
             style={{ color: activeTab === tab.id ? 'var(--accent)' : 'var(--ink-faint)', background: 'transparent', border: 'none' }}>
             {tab.label}
-            {activeTab === tab.id && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-t" style={{ background: 'var(--accent)' }} />
-            )}
             {tab.id === 'jobs' && state.jobs.length > 0 && (
-              <span className="ml-1.5 text-xs px-1.5 py-0.5 rounded font-mono"
+              <span className="ml-1.5 text-xs px-1.5 py-0.5 rounded-full font-mono"
                 style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>
                 {state.jobs.length}
               </span>
+            )}
+            {activeTab === tab.id && (
+              <motion.div layoutId="tab-indicator"
+                className="absolute bottom-0 left-2 right-2 h-0.5 rounded-t-full"
+                style={{ background: 'linear-gradient(to right, transparent, var(--accent), transparent)' }}
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
             )}
           </button>
         ))}

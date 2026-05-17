@@ -90,13 +90,20 @@ export function InterviewQBank({ currentWeek }: { currentWeek: number }) {
           }, {})
 
           return (
-            <div key={topic} className="rounded-xl border overflow-hidden"
-              style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+            <div key={topic} className="rounded-xl overflow-hidden"
+              style={{
+                background: 'var(--bg-glass)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: `1px solid ${isOpen ? `${meta.color}35` : 'var(--border)'}`,
+                boxShadow: isOpen ? `0 0 24px ${meta.color}15` : 'none',
+                transition: 'border-color 0.3s, box-shadow 0.3s',
+              }}>
               <button onClick={() => toggleTopic(topic)}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left cursor-pointer"
-                style={{ background: isOpen ? 'var(--bg-hover)' : 'transparent' }}>
-                <span className="flex items-center justify-center w-6 h-6 rounded text-sm font-bold flex-shrink-0"
-                  style={{ background: meta.bg, color: meta.color }}>{meta.icon}</span>
+                style={{ background: isOpen ? 'rgba(255,255,255,0.03)' : 'transparent' }}>
+                <span className="flex items-center justify-center w-7 h-7 rounded-lg text-sm font-bold flex-shrink-0"
+                  style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.color}30` }}>{meta.icon}</span>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-semibold">{topic}</div>
                   <div className="text-xs font-mono" style={{ color: 'var(--ink-faint)' }}>{meta.obsidianFile}</div>
@@ -178,7 +185,7 @@ export function InterviewQBank({ currentWeek }: { currentWeek: number }) {
       </div>
 
       {/* Obsidian sync note */}
-      <div className="mt-4 rounded-lg p-3 border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+      <div className="mt-4 rounded-xl p-4" style={{ background: 'var(--bg-glass)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid var(--border)' }}>
         <div className="text-xs font-mono uppercase tracking-widest mb-1" style={{ color: 'var(--ink-faint)' }}>
           Obsidian sync
         </div>
