@@ -62,7 +62,7 @@ export function JobTracker({ jobs, onAdd, onUpdateStatus, onUpdate, onDelete }: 
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--ink-dim)' }}>Job Opportunities</h1>
+          <h1 className="text-xs font-mono uppercase tracking-widest font-semibold" style={{ color: 'var(--ink-dim)' }}>Job Opportunities</h1>
           <p className="text-xs mt-0.5" style={{ color: 'var(--ink-faint)' }}>{jobs.length} tracked · {counts.interview + counts.offer} active</p>
         </div>
         <button onClick={() => setShowForm(v => !v)}

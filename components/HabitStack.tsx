@@ -15,7 +15,7 @@ const CUE_ICONS: Record<string, string> = {
 export function HabitStack({ habits }: HabitStackProps) {
   return (
     <div>
-      <h2 className="text-xs font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--ink-faint)' }}>Habit Stack</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest font-semibold mb-3" style={{ color: 'var(--ink-faint)' }}>Habit Stack</h2>
       <div className="relative">
         {/* Connector line */}
         <div className="absolute left-[18px] top-4 bottom-4 w-px"

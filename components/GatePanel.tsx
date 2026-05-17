@@ -17,7 +17,7 @@ const CFG: Record<GateStatus, { icon: string; color: string; bg: string; border:
 export function GatePanel({ gates, gateStatuses, onToggle }: GatePanelProps) {
   return (
     <div>
-      <h2 className="text-xs font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--ink-faint)' }}>Gates</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest font-semibold mb-3" style={{ color: 'var(--ink-faint)' }}>Gates</h2>
       <div className="flex flex-col gap-2.5">
         {gates.map((gate, i) => {
           const status = gateStatuses[gate.id] ?? gate.status

@@ -47,7 +47,7 @@ export function SessionBlueprint({ steps, onLogSession }: SessionBlueprintProps)
 
   return (
     <div>
-      <h2 className="text-xs font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--ink-faint)' }}>Session Blueprint</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest font-semibold mb-3" style={{ color: 'var(--ink-faint)' }}>Session Blueprint</h2>
 
       {/* Timer card */}
       <div className="rounded-xl p-4 mb-3 relative overflow-hidden"

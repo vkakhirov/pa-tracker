@@ -19,7 +19,7 @@ export function WeekProgress({ weeks, problemStatuses, onSetStatus, currentWeek,
 
   return (
     <div>
-      <h2 className="text-xs font-mono uppercase tracking-widest mb-3" style={{ color: 'var(--ink-faint)' }}>Curriculum</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest font-semibold mb-3" style={{ color: 'var(--ink-faint)' }}>Curriculum</h2>
       <div className="flex flex-col gap-2.5">
         {weeks.map((week, wi) => {
           const color = WEEK_COLORS[wi] ?? 'var(--accent)'

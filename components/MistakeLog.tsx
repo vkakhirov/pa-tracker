@@ -22,7 +22,7 @@ export function MistakeLog({ mistakes, remediationDone, onToggleRemediation }: M
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--ink-faint)' }}>Mistake Log</h2>
+        <h2 className="text-xs font-mono uppercase tracking-widest font-semibold" style={{ color: 'var(--ink-faint)' }}>Mistake Log</h2>
         <motion.span
           animate={{ opacity: activeCount > 0 ? [1, 0.6, 1] : 1 }}
           transition={{ duration: 2, repeat: Infinity }}

@@ -47,7 +47,7 @@ export function InterviewQBank({ currentWeek }: { currentWeek: number }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--ink-dim)' }}>
+          <h1 className="text-xs font-mono uppercase tracking-widest font-semibold" style={{ color: 'var(--ink-dim)' }}>
             Interview Q Bank
           </h1>
           <p className="text-xs mt-0.5" style={{ color: 'var(--ink-faint)' }}>
@@ -186,7 +186,7 @@ export function InterviewQBank({ currentWeek }: { currentWeek: number }) {
 
       {/* Obsidian sync note */}
       <div className="mt-4 rounded-xl p-4" style={{ background: 'var(--bg-glass)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid var(--border)' }}>
-        <div className="text-xs font-mono uppercase tracking-widest mb-1" style={{ color: 'var(--ink-faint)' }}>
+        <div className="text-xs font-mono uppercase tracking-widest font-semibold mb-1" style={{ color: 'var(--ink-faint)' }}>
           Obsidian sync
         </div>
         <p className="text-xs leading-relaxed" style={{ color: 'var(--ink-dim)' }}>
