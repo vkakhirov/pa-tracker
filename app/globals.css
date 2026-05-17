@@ -1,31 +1,34 @@
 @import "tailwindcss";
 
-/* ── Base font size uplift ── */
-html { font-size: 15px; }
+/* ── Base font uplift ── */
+html { font-size: 16px; }
 
+/* ════════════════════════════════════════════
+   ROOT — Obsidian (default)
+   ════════════════════════════════════════════ */
 :root {
-  /* ── Surfaces ── */
+  /* Surfaces */
   --bg:            #060609;
   --bg-card:       rgba(255, 255, 255, 0.034);
-  --bg-card-solid: #0f1117;
-  --bg-hover:      rgba(255, 255, 255, 0.06);
   --bg-glass:      rgba(255, 255, 255, 0.045);
+  --bg-hover:      rgba(255, 255, 255, 0.06);
+  --bg-input:      rgba(255, 255, 255, 0.05);
 
-  /* ── Borders ── */
+  /* Borders */
   --border:        rgba(255, 255, 255, 0.07);
   --border-bright: rgba(255, 255, 255, 0.14);
 
-  /* ── Text ── */
+  /* Text */
   --ink:           #e8eaf0;
-  --ink-dim:       #7a8090;
-  --ink-faint:     #3a4050;
+  --ink-dim:       #8590a0;
+  --ink-faint:     #404858;
 
-  /* ── Accent (Obsidian / Blue default) ── */
+  /* Accent */
   --accent:        #4f8ef7;
   --accent-dim:    rgba(79, 142, 247, 0.15);
   --accent-glow:   rgba(79, 142, 247, 0.25);
 
-  /* ── Semantic ── */
+  /* Semantic */
   --green:         #22c55e;
   --green-dim:     rgba(34, 197, 94, 0.12);
   --green-glow:    rgba(34, 197, 94, 0.2);
@@ -39,52 +42,82 @@ html { font-size: 15px; }
   --purple-glow:   rgba(168, 85, 247, 0.2);
   --orange:        #f97316;
   --orange-dim:    rgba(249, 115, 22, 0.12);
-  --orange-glow:   rgba(249, 115, 22, 0.3);
 
-  /* ── Radius ── */
+  /* Tokens */
   --radius-sm:    10px;
   --radius:       16px;
   --radius-lg:    20px;
-
-  /* ── Blur ── */
-  --blur:         blur(16px);
-  --blur-sm:      blur(8px);
-
-  /* ── Easing ── */
   --spring:       cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ══════════════════════════════════════════
-   THEMES  — override accent + glow only
-   ══════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   THEMES
+   ════════════════════════════════════════════ */
 
 [data-theme="obsidian"] {
-  --accent:      #4f8ef7;
-  --accent-dim:  rgba(79, 142, 247, 0.15);
-  --accent-glow: rgba(79, 142, 247, 0.25);
+  --bg:            #060609;
+  --bg-card:       rgba(255, 255, 255, 0.034);
+  --bg-glass:      rgba(255, 255, 255, 0.042);
+  --bg-hover:      rgba(255, 255, 255, 0.06);
+  --bg-input:      rgba(255, 255, 255, 0.05);
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-bright: rgba(255, 255, 255, 0.14);
+  --accent:        #4f8ef7;
+  --accent-dim:    rgba(79, 142, 247, 0.15);
+  --accent-glow:   rgba(79, 142, 247, 0.25);
 }
 
-[data-theme="violet"] {
-  --accent:      #8b5cf6;
-  --accent-dim:  rgba(139, 92, 246, 0.15);
-  --accent-glow: rgba(139, 92, 246, 0.28);
+[data-theme="midnight"] {
+  --bg:            #020817;
+  --bg-card:       rgba(99, 120, 255, 0.04);
+  --bg-glass:      rgba(99, 120, 255, 0.05);
+  --bg-hover:      rgba(99, 120, 255, 0.08);
+  --bg-input:      rgba(99, 120, 255, 0.06);
+  --border:        rgba(130, 150, 255, 0.1);
+  --border-bright: rgba(130, 150, 255, 0.2);
+  --ink:           #dde3f8;
+  --ink-dim:       #7b89b8;
+  --ink-faint:     #374163;
+  --accent:        #818cf8;
+  --accent-dim:    rgba(129, 140, 248, 0.15);
+  --accent-glow:   rgba(129, 140, 248, 0.28);
 }
 
-[data-theme="emerald"] {
-  --accent:      #10b981;
-  --accent-dim:  rgba(16, 185, 129, 0.15);
-  --accent-glow: rgba(16, 185, 129, 0.25);
+[data-theme="forest"] {
+  --bg:            #020d07;
+  --bg-card:       rgba(52, 211, 153, 0.035);
+  --bg-glass:      rgba(52, 211, 153, 0.04);
+  --bg-hover:      rgba(52, 211, 153, 0.07);
+  --bg-input:      rgba(52, 211, 153, 0.05);
+  --border:        rgba(52, 211, 153, 0.09);
+  --border-bright: rgba(52, 211, 153, 0.18);
+  --ink:           #d4ede4;
+  --ink-dim:       #6b9e85;
+  --ink-faint:     #2d5040;
+  --accent:        #34d399;
+  --accent-dim:    rgba(52, 211, 153, 0.15);
+  --accent-glow:   rgba(52, 211, 153, 0.25);
 }
 
-[data-theme="rose"] {
-  --accent:      #f43f5e;
-  --accent-dim:  rgba(244, 63, 94, 0.15);
-  --accent-glow: rgba(244, 63, 94, 0.25);
+[data-theme="warm"] {
+  --bg:            #0d0905;
+  --bg-card:       rgba(251, 146, 60, 0.035);
+  --bg-glass:      rgba(251, 146, 60, 0.04);
+  --bg-hover:      rgba(251, 146, 60, 0.07);
+  --bg-input:      rgba(251, 146, 60, 0.05);
+  --border:        rgba(251, 146, 60, 0.09);
+  --border-bright: rgba(251, 146, 60, 0.2);
+  --ink:           #f0e8df;
+  --ink-dim:       #a08070;
+  --ink-faint:     #503828;
+  --accent:        #fb923c;
+  --accent-dim:    rgba(251, 146, 60, 0.15);
+  --accent-glow:   rgba(251, 146, 60, 0.28);
 }
 
-/* ══════════════════════════════════════════
-   Tailwind theme inline
-   ══════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   Tailwind inline theme
+   ════════════════════════════════════════════ */
 @theme inline {
   --color-background: var(--bg);
   --color-foreground:  var(--ink);
@@ -92,28 +125,37 @@ html { font-size: 15px; }
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
+/* ════════════════════════════════════════════
+   Base styles
+   ════════════════════════════════════════════ */
 * { box-sizing: border-box; }
 
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Monospace ── */
+/* Scale up Tailwind text sizes a notch globally */
+.text-xs  { font-size: 0.8125rem;  } /* 13px */
+.text-sm  { font-size: 0.9375rem;  } /* 15px */
+.text-base{ font-size: 1.0625rem;  } /* 17px */
+.text-lg  { font-size: 1.1875rem;  } /* 19px */
+
 code, kbd, pre, .font-mono {
   font-family: var(--font-mono);
+  font-size: 0.875em;
 }
 
-/* ── Glassmorphism helpers ── */
+/* ── Glass helpers ── */
 .glass {
   background: var(--bg-glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
@@ -121,10 +163,13 @@ code, kbd, pre, .font-mono {
 /* ── Glow utilities ── */
 .glow-accent  { box-shadow: 0 0 24px var(--accent-glow), 0 0 0 1px var(--accent-glow); }
 .glow-green   { box-shadow: 0 0 20px var(--green-glow); }
-.glow-yellow  { box-shadow: 0 0 28px var(--yellow-glow), 0 0 0 1px var(--yellow-glow); }
-.card-shadow  { box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.06) inset; }
+.glow-yellow  { box-shadow: 0 0 28px var(--yellow-glow); }
+.card-shadow  { box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05) inset; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+/* ── Selection ── */
+::selection { background: var(--accent-dim); color: var(--ink); }

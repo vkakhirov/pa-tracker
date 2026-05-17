@@ -1,20 +1,45 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-export type ThemeId = 'obsidian' | 'violet' | 'emerald' | 'rose'
+export type ThemeId = 'obsidian' | 'midnight' | 'forest' | 'warm'
 
 export interface Theme {
   id: ThemeId
   label: string
+  bg: string
   accent: string
-  preview: string
+  description: string
 }
 
 export const THEMES: Theme[] = [
-  { id: 'obsidian', label: 'Obsidian', accent: '#4f8ef7', preview: '#4f8ef7' },
-  { id: 'violet',   label: 'Violet',   accent: '#8b5cf6', preview: '#8b5cf6' },
-  { id: 'emerald',  label: 'Emerald',  accent: '#10b981', preview: '#10b981' },
-  { id: 'rose',     label: 'Rose',     accent: '#f43f5e', preview: '#f43f5e' },
+  {
+    id: 'obsidian',
+    label: 'Obsidian',
+    bg: '#060609',
+    accent: '#4f8ef7',
+    description: 'Cold blue-black',
+  },
+  {
+    id: 'midnight',
+    label: 'Midnight',
+    bg: '#020817',
+    accent: '#818cf8',
+    description: 'Deep navy',
+  },
+  {
+    id: 'forest',
+    label: 'Forest',
+    bg: '#020d07',
+    accent: '#34d399',
+    description: 'Dark emerald',
+  },
+  {
+    id: 'warm',
+    label: 'Warm',
+    bg: '#0d0905',
+    accent: '#fb923c',
+    description: 'Charcoal amber',
+  },
 ]
 
 const STORAGE_KEY = 'pa-tracker-theme'
