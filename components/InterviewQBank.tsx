@@ -101,7 +101,7 @@ export function InterviewQBank({ currentWeek }: { currentWeek: number }) {
               }}>
               <button onClick={() => toggleTopic(topic)}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left cursor-pointer"
-                style={{ background: isOpen ? 'rgba(255,255,255,0.03)' : 'transparent' }}>
+                style={{ background: isOpen ? 'var(--bg-active)' : 'transparent' }}>
                 <span className="flex items-center justify-center w-7 h-7 rounded-lg text-sm font-bold flex-shrink-0"
                   style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.color}30` }}>{meta.icon}</span>
                 <div className="flex-1 min-w-0">

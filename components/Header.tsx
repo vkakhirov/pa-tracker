@@ -14,7 +14,7 @@ export function Header({ streak, currentWeek, currentDay }: HeaderProps) {
       className="flex items-center justify-between px-6 py-4 border-b"
       style={{
         borderColor: 'var(--border)',
-        background: 'rgba(6,6,9,0.85)',
+        background: 'var(--bg-header)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         position: 'sticky',

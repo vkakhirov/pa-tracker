@@ -55,7 +55,7 @@ export default function Dashboard() {
       <Header streak={state.streak} currentWeek={CURRENT_WEEK} currentDay={CURRENT_DAY} />
 
       {/* Tab nav */}
-      <div className="flex items-center gap-1 border-b px-6" style={{ borderColor: 'var(--border)', background: 'rgba(6,6,9,0.6)' }}>
+      <div className="flex items-center gap-1 border-b px-6" style={{ borderColor: 'var(--border)', background: 'var(--bg-header)' }}>
         {TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className="relative px-4 py-3 text-xs font-mono uppercase tracking-widest cursor-pointer transition-all duration-200"

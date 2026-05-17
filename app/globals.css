@@ -43,6 +43,14 @@ html { font-size: 16px; }
   --orange:        #f97316;
   --orange-dim:    rgba(249, 115, 22, 0.12);
 
+  /* Adaptive surface tokens */
+  --bg-header:    rgba(6, 6, 9, 0.88);
+  --bg-dropdown:  rgba(8, 10, 16, 0.97);
+  --bg-active:    rgba(255, 255, 255, 0.04);
+  --bg-subtle:    rgba(255, 255, 255, 0.018);
+  --bg-tag:       rgba(255, 255, 255, 0.06);
+  --svg-track:    rgba(255, 255, 255, 0.08);
+
   /* Tokens */
   --radius-sm:    10px;
   --radius:       16px;
@@ -60,6 +68,12 @@ html { font-size: 16px; }
   --bg-glass:      rgba(255, 255, 255, 0.042);
   --bg-hover:      rgba(255, 255, 255, 0.06);
   --bg-input:      rgba(255, 255, 255, 0.05);
+  --bg-header:     rgba(6, 6, 9, 0.88);
+  --bg-dropdown:   rgba(8, 10, 16, 0.97);
+  --bg-active:     rgba(255, 255, 255, 0.04);
+  --bg-subtle:     rgba(255, 255, 255, 0.018);
+  --bg-tag:        rgba(255, 255, 255, 0.06);
+  --svg-track:     rgba(255, 255, 255, 0.08);
   --border:        rgba(255, 255, 255, 0.07);
   --border-bright: rgba(255, 255, 255, 0.14);
   --accent:        #4f8ef7;
@@ -73,6 +87,12 @@ html { font-size: 16px; }
   --bg-glass:      rgba(99, 120, 255, 0.05);
   --bg-hover:      rgba(99, 120, 255, 0.08);
   --bg-input:      rgba(99, 120, 255, 0.06);
+  --bg-header:     rgba(2, 8, 23, 0.9);
+  --bg-dropdown:   rgba(4, 10, 28, 0.98);
+  --bg-active:     rgba(99, 120, 255, 0.06);
+  --bg-subtle:     rgba(99, 120, 255, 0.025);
+  --bg-tag:        rgba(99, 120, 255, 0.08);
+  --svg-track:     rgba(130, 150, 255, 0.12);
   --border:        rgba(130, 150, 255, 0.1);
   --border-bright: rgba(130, 150, 255, 0.2);
   --ink:           #dde3f8;
@@ -89,6 +109,12 @@ html { font-size: 16px; }
   --bg-glass:      rgba(52, 211, 153, 0.04);
   --bg-hover:      rgba(52, 211, 153, 0.07);
   --bg-input:      rgba(52, 211, 153, 0.05);
+  --bg-header:     rgba(2, 13, 7, 0.9);
+  --bg-dropdown:   rgba(3, 18, 10, 0.98);
+  --bg-active:     rgba(52, 211, 153, 0.06);
+  --bg-subtle:     rgba(52, 211, 153, 0.02);
+  --bg-tag:        rgba(52, 211, 153, 0.08);
+  --svg-track:     rgba(52, 211, 153, 0.12);
   --border:        rgba(52, 211, 153, 0.09);
   --border-bright: rgba(52, 211, 153, 0.18);
   --ink:           #d4ede4;
@@ -105,6 +131,12 @@ html { font-size: 16px; }
   --bg-glass:      rgba(251, 146, 60, 0.04);
   --bg-hover:      rgba(251, 146, 60, 0.07);
   --bg-input:      rgba(251, 146, 60, 0.05);
+  --bg-header:     rgba(13, 9, 5, 0.9);
+  --bg-dropdown:   rgba(18, 12, 6, 0.98);
+  --bg-active:     rgba(251, 146, 60, 0.06);
+  --bg-subtle:     rgba(251, 146, 60, 0.02);
+  --bg-tag:        rgba(251, 146, 60, 0.08);
+  --svg-track:     rgba(251, 146, 60, 0.12);
   --border:        rgba(251, 146, 60, 0.09);
   --border-bright: rgba(251, 146, 60, 0.2);
   --ink:           #f0e8df;
@@ -116,13 +148,19 @@ html { font-size: 16px; }
 }
 
 [data-theme="light"] {
-  --bg:            #f8fafc;
-  --bg-card:       rgba(0, 0, 0, 0.028);
-  --bg-glass:      rgba(255, 255, 255, 0.72);
-  --bg-hover:      rgba(0, 0, 0, 0.05);
-  --bg-input:      rgba(0, 0, 0, 0.04);
-  --border:        rgba(0, 0, 0, 0.08);
-  --border-bright: rgba(0, 0, 0, 0.16);
+  --bg:            #f1f5f9;
+  --bg-card:       rgba(255, 255, 255, 0.8);
+  --bg-glass:      rgba(255, 255, 255, 0.75);
+  --bg-hover:      rgba(0, 0, 0, 0.045);
+  --bg-input:      rgba(255, 255, 255, 0.9);
+  --bg-header:     rgba(241, 245, 249, 0.92);
+  --bg-dropdown:   rgba(255, 255, 255, 0.99);
+  --bg-active:     rgba(0, 0, 0, 0.04);
+  --bg-subtle:     rgba(0, 0, 0, 0.025);
+  --bg-tag:        rgba(0, 0, 0, 0.055);
+  --svg-track:     rgba(0, 0, 0, 0.1);
+  --border:        rgba(0, 0, 0, 0.09);
+  --border-bright: rgba(0, 0, 0, 0.18);
   --ink:           #0f172a;
   --ink-dim:       #475569;
   --ink-faint:     #94a3b8;

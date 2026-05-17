@@ -41,10 +41,11 @@ export function ThemePicker() {
               transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className="absolute right-0 top-full mt-2 z-50 p-2 min-w-[190px]"
               style={{
-                background: 'rgba(8,10,16,0.97)',
+                background: 'var(--bg-dropdown)',
                 backdropFilter: 'blur(24px)',
                 WebkitBackdropFilter: 'blur(24px)',
                 border: '1px solid var(--border-bright)',
+                color: 'var(--ink)',
                 borderRadius: '14px',
                 boxShadow: '0 20px 48px rgba(0,0,0,0.7)',
               }}>

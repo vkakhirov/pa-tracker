@@ -67,9 +67,9 @@ export function SessionBlueprint({ steps, onLogSession }: SessionBlueprintProps)
         <div className="flex items-center justify-between gap-4">
           {/* SVG ring timer */}
           <div className="relative flex-shrink-0">
-            <svg width="88" height="88" viewBox="0 0 88 88">
+            <svg width="88" height="88" viewBox="0 0 88 88" style={{ '--track': 'var(--svg-track)' } as React.CSSProperties}>
               {/* Track */}
-              <circle cx="44" cy="44" r={R} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="5" />
+              <circle cx="44" cy="44" r={R} fill="none" stroke="var(--svg-track)" strokeWidth="5" />
               {/* Progress */}
               <motion.circle
                 cx="44" cy="44" r={R}

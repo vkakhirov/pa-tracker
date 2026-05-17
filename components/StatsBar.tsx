@@ -33,7 +33,7 @@ export function StatsBar({ weeks, problemStatuses, completedDates, areaWeights }
   return (
     <div className="border-b" style={{ borderColor: 'var(--border)' }}>
       {/* Priority weights */}
-      <div className="px-6 py-2.5 flex items-center gap-5 overflow-x-auto border-b" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.015)' }}>
+      <div className="px-6 py-2.5 flex items-center gap-5 overflow-x-auto border-b" style={{ borderColor: 'var(--border)', background: 'var(--bg-subtle)' }}>
         <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--ink-faint)' }}>Priority</span>
         {areaWeights.map((a) => {
           const color = AREA_COLORS[a.area] ?? 'var(--ink-faint)'

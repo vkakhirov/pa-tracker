@@ -44,7 +44,7 @@ export function HabitStack({ habits }: HabitStackProps) {
                 <div className="text-xs font-medium mt-0.5" style={{ color: 'var(--ink)' }}>→ {h.action}</div>
               </div>
               <span className="text-xs flex-shrink-0 px-1.5 py-0.5 rounded font-mono"
-                style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--ink-faint)' }}>
+                style={{ background: 'var(--bg-tag)', color: 'var(--ink-faint)' }}>
                 {h.duration}
               </span>
             </motion.div>

@@ -54,7 +54,7 @@ export function MistakeLog({ mistakes, remediationDone, onToggleRemediation }: M
               }}>
               <button onClick={() => setExpanded(isOpen ? null : mistake.id)}
                 className="w-full flex items-center gap-3 px-3.5 py-3 text-left cursor-pointer"
-                style={{ background: isOpen ? 'rgba(255,255,255,0.03)' : 'transparent' }}>
+                style={{ background: isOpen ? 'var(--bg-active)' : 'transparent' }}>
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-lg flex-shrink-0"
                   style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
                   {mistake.id}

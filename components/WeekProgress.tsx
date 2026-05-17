@@ -41,7 +41,7 @@ export function WeekProgress({ weeks, problemStatuses, onSetStatus, currentWeek,
               }}>
               <button onClick={() => setOpenWeek(isOpen ? 0 : week.number)}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left cursor-pointer"
-                style={{ background: isOpen ? 'rgba(255,255,255,0.03)' : 'transparent' }}>
+                style={{ background: isOpen ? 'var(--bg-active)' : 'transparent' }}>
                 {/* Week number badge */}
                 <div className="relative flex-shrink-0">
                   <span className="flex items-center justify-center w-7 h-7 rounded-lg text-xs font-bold font-mono"
@@ -97,7 +97,7 @@ export function WeekProgress({ weeks, problemStatuses, onSetStatus, currentWeek,
                           <div key={day.number} className="rounded-lg overflow-hidden">
                             <button onClick={() => setOpenDay(isDayOpen ? 0 : day.number)}
                               className="w-full flex items-center gap-2.5 px-2.5 py-2 text-left cursor-pointer rounded-lg transition-colors"
-                              style={{ background: isCurrentDay ? `${color}12` : isDayOpen ? 'rgba(255,255,255,0.04)' : 'transparent' }}>
+                              style={{ background: isCurrentDay ? `${color}12` : isDayOpen ? 'var(--bg-active)' : 'transparent' }}>
                               <span className="text-xs font-mono w-5 flex-shrink-0"
                                 style={{ color: isCurrentDay ? color : 'var(--ink-faint)' }}>D{day.number}</span>
                               <span className="text-xs flex-1 truncate font-medium"
