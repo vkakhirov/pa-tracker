@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import type { ProblemStatus, GateStatus } from './data'
+import type { ProblemStatus, GateStatus, JobOpportunity, JobStatus } from './data'
 
 const STORAGE_KEY = 'pa-tracker-state'
 
@@ -12,6 +12,7 @@ interface StoredState {
   streak: number
   lastSessionDate: string | null
   completedDates: string[]
+  jobs: JobOpportunity[]
 }
 
 const DEFAULT_STATE: StoredState = {
@@ -26,6 +27,7 @@ const DEFAULT_STATE: StoredState = {
   streak: 4,
   lastSessionDate: '2026-05-16',
   completedDates: ['2026-05-13', '2026-05-14', '2026-05-15', '2026-05-16'],
+  jobs: [],
 }
 
 function load(): StoredState {
@@ -101,5 +103,38 @@ export function useStore() {
     })
   }, [])
 
-  return { state, mounted, setProblemStatus, setGateStatus, toggleRemediation, logSession }
+  const addJob = useCallback((job: Omit<JobOpportunity, 'id' | 'dateAdded'>) => {
+    setState(prev => {
+      const newJob: JobOpportunity = {
+        ...job,
+        id: `job-${Date.now()}`,
+        dateAdded: new Date().toISOString().slice(0, 10),
+      }
+      const next = { ...prev, jobs: [newJob, ...prev.jobs] }
+      save(next); return next
+    })
+  }, [])
+
+  const updateJobStatus = useCallback((id: string, status: JobStatus) => {
+    setState(prev => {
+      const next = { ...prev, jobs: prev.jobs.map(j => j.id === id ? { ...j, status } : j) }
+      save(next); return next
+    })
+  }, [])
+
+  const updateJob = useCallback((id: string, patch: Partial<JobOpportunity>) => {
+    setState(prev => {
+      const next = { ...prev, jobs: prev.jobs.map(j => j.id === id ? { ...j, ...patch } : j) }
+      save(next); return next
+    })
+  }, [])
+
+  const deleteJob = useCallback((id: string) => {
+    setState(prev => {
+      const next = { ...prev, jobs: prev.jobs.filter(j => j.id !== id) }
+      save(next); return next
+    })
+  }, [])
+
+  return { state, mounted, setProblemStatus, setGateStatus, toggleRemediation, logSession, addJob, updateJobStatus, updateJob, deleteJob }
 }

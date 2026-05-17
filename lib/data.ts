@@ -1,6 +1,29 @@
 export type ProblemStatus = 'done' | 'pending' | 'failed'
 export type MistakeStatus = 'active' | 'gated' | 'remediated'
 export type GateStatus = 'passed' | 'active' | 'locked'
+export type JobStatus = 'wishlist' | 'applied' | 'screening' | 'interview' | 'offer' | 'rejected' | 'ghosted'
+
+export interface InterviewQuestion {
+  id: string
+  topic: 'SQL' | 'Python' | 'Product Metrics' | 'Coding'
+  subtopic: string
+  question: string
+  obsidianSection: string
+  weekCovered?: number
+  difficulty: 'easy' | 'medium' | 'hard'
+}
+
+export interface JobOpportunity {
+  id: string
+  company: string
+  role: string
+  status: JobStatus
+  dateAdded: string
+  dateApplied?: string
+  url?: string
+  notes?: string
+  tags?: string[]
+}
 
 export interface Problem {
   id: string
@@ -75,7 +98,7 @@ export const GATES: Gate[] = [
     unlocksDay: 'Day 3',
     requirement: 'Write Two Sum from memory + trace [2,7,11,15] target=9 on paper, zero bugs',
     linkedMistakes: ['ML-005', 'ML-006'],
-    status: 'active',
+    status: 'passed',
   },
 ]
 
@@ -335,6 +358,148 @@ export const AREA_WEIGHTS = [
   { area: 'Product metrics', weight: 4, focus: 'DAU/MAU, retention, funnel, LTV, A/B logic' },
   { area: 'Basic Python logic', weight: 3, focus: 'Dict/list ops, comprehensions, string handling' },
   { area: 'Hard algorithms', weight: 1, focus: 'Almost none — not SWE role' },
+]
+
+export const INTERVIEW_QUESTIONS: InterviewQuestion[] = [
+  // ── SQL ──────────────────────────────────────────────────────────────────────
+  {
+    id: 'Q-SQL-001', topic: 'SQL', subtopic: 'GROUP BY + HAVING',
+    question: 'Find all users who made more than 3 purchases in the last 7 days.',
+    obsidianSection: '## SQL — Aggregations', weekCovered: 2, difficulty: 'easy',
+  },
+  {
+    id: 'Q-SQL-002', topic: 'SQL', subtopic: 'GROUP BY + HAVING',
+    question: 'Which product categories generated revenue above the category average? (HAVING vs WHERE)',
+    obsidianSection: '## SQL — Aggregations', weekCovered: 2, difficulty: 'medium',
+  },
+  {
+    id: 'Q-SQL-003', topic: 'SQL', subtopic: 'JOINs',
+    question: 'Find users who registered but never made a single purchase. (LEFT JOIN + IS NULL)',
+    obsidianSection: '## SQL — JOINs', weekCovered: 2, difficulty: 'easy',
+  },
+  {
+    id: 'Q-SQL-004', topic: 'SQL', subtopic: 'JOINs',
+    question: 'Self-join: find all pairs of users who share the same country and joined in the same month.',
+    obsidianSection: '## SQL — JOINs', weekCovered: 2, difficulty: 'medium',
+  },
+  {
+    id: 'Q-SQL-005', topic: 'SQL', subtopic: 'Window Functions',
+    question: 'Rank users by total revenue within each country. Return only rank ≤ 3 per country. (DENSE_RANK + PARTITION BY)',
+    obsidianSection: '## SQL — Window Functions', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-SQL-006', topic: 'SQL', subtopic: 'Window Functions',
+    question: 'Calculate 7-day rolling revenue per user using SUM OVER (ORDER BY date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW).',
+    obsidianSection: '## SQL — Window Functions', weekCovered: 3, difficulty: 'hard',
+  },
+  {
+    id: 'Q-SQL-007', topic: 'SQL', subtopic: 'Window Functions',
+    question: 'Day-over-day revenue change per user. Use LAG() to compare today vs yesterday.',
+    obsidianSection: '## SQL — Window Functions', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-SQL-008', topic: 'SQL', subtopic: 'CTEs',
+    question: 'Write a multi-step CTE that calculates D7 retention rate: new_users → retained → ratio.',
+    obsidianSection: '## SQL — CTEs', weekCovered: 3, difficulty: 'hard',
+  },
+  {
+    id: 'Q-SQL-009', topic: 'SQL', subtopic: 'CTEs',
+    question: 'Rewrite a nested subquery using CTEs. Explain when CTEs improve readability vs performance.',
+    obsidianSection: '## SQL — CTEs', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-SQL-010', topic: 'SQL', subtopic: 'Funnel in SQL',
+    question: 'Given an events table (user_id, event_type, timestamp), write a full funnel query: visit → signup → purchase.',
+    obsidianSection: '## SQL — Funnel', weekCovered: 3, difficulty: 'hard',
+  },
+  // ── Python / pandas ──────────────────────────────────────────────────────────
+  {
+    id: 'Q-PY-001', topic: 'Python', subtopic: 'groupby + agg',
+    question: 'Calculate median, mean, and count of session_duration grouped by country and device_type.',
+    obsidianSection: '## Python — GroupBy', weekCovered: 2, difficulty: 'easy',
+  },
+  {
+    id: 'Q-PY-002', topic: 'Python', subtopic: 'merge (JOIN)',
+    question: 'LEFT JOIN users onto events to find churned users (no events in last 30 days). Use isna() to detect.',
+    obsidianSection: '## Python — Merge', weekCovered: 2, difficulty: 'medium',
+  },
+  {
+    id: 'Q-PY-003', topic: 'Python', subtopic: 'pivot_table',
+    question: 'Build a weekly retention cohort table: rows = cohort_week, columns = weeks_since_join, values = retention %.',
+    obsidianSection: '## Python — Pivot & Retention', weekCovered: 3, difficulty: 'hard',
+  },
+  {
+    id: 'Q-PY-004', topic: 'Python', subtopic: 'time series',
+    question: 'Calculate 7-day rolling average of DAU using .resample("D").nunique() + rolling(7).mean().',
+    obsidianSection: '## Python — Time Series', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-PY-005', topic: 'Python', subtopic: 'funnel + DAU/MAU',
+    question: 'From a raw events DataFrame, compute step-by-step funnel conversion and identify the biggest drop-off.',
+    obsidianSection: '## Python — Funnel', weekCovered: 3, difficulty: 'hard',
+  },
+  {
+    id: 'Q-PY-006', topic: 'Python', subtopic: 'A/B testing',
+    question: 'Given control and treatment DataFrames, compute conversion rate, lift %, and run scipy t-test. Interpret p-value.',
+    obsidianSection: '## Python — A/B Testing', weekCovered: 4, difficulty: 'hard',
+  },
+  {
+    id: 'Q-PY-007', topic: 'Python', subtopic: 'data cleaning',
+    question: 'A column has mixed types (numbers as strings, NaN). Normalize with .astype(), fillna(), and validate with .dtype.',
+    obsidianSection: '## Python — Cleaning', weekCovered: 1, difficulty: 'easy',
+  },
+  // ── Product Metrics ──────────────────────────────────────────────────────────
+  {
+    id: 'Q-PM-001', topic: 'Product Metrics', subtopic: 'DAU/MAU',
+    question: 'DAU/MAU dropped 15% this week. Walk me through your diagnosis framework.',
+    obsidianSection: '## Metrics — DAU/MAU', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-PM-002', topic: 'Product Metrics', subtopic: 'Retention',
+    question: "Define D1, D7, D30 retention. What's a healthy D30 for a consumer app? How do you improve it?",
+    obsidianSection: '## Metrics — Retention', weekCovered: 3, difficulty: 'medium',
+  },
+  {
+    id: 'Q-PM-003', topic: 'Product Metrics', subtopic: 'Funnel',
+    question: 'Conversion from cart → checkout dropped 8%. What data would you look at first and why?',
+    obsidianSection: '## Metrics — Funnel', weekCovered: 3, difficulty: 'hard',
+  },
+  {
+    id: 'Q-PM-004', topic: 'Product Metrics', subtopic: 'A/B Testing',
+    question: 'Your A/B test shows p=0.04 and +5% lift, but the confidence interval touches 0. Do you ship?',
+    obsidianSection: '## Metrics — A/B Testing', weekCovered: 4, difficulty: 'hard',
+  },
+  {
+    id: 'Q-PM-005', topic: 'Product Metrics', subtopic: 'North Star',
+    question: 'Pick a north star metric for a B2B SaaS project management tool. Justify the choice.',
+    obsidianSection: '## Metrics — North Star', weekCovered: 4, difficulty: 'medium',
+  },
+  {
+    id: 'Q-PM-006', topic: 'Product Metrics', subtopic: 'LTV',
+    question: 'How would you estimate LTV for a freemium subscription product? What data do you need?',
+    obsidianSection: '## Metrics — LTV', weekCovered: 4, difficulty: 'hard',
+  },
+  // ── Coding ───────────────────────────────────────────────────────────────────
+  {
+    id: 'Q-CODE-001', topic: 'Coding', subtopic: 'Dict lookups',
+    question: 'Given a list of (user_id, event_type) tuples, return a dict of unique event counts per user. O(n).',
+    obsidianSection: '## Coding — Dict Patterns', weekCovered: 1, difficulty: 'easy',
+  },
+  {
+    id: 'Q-CODE-002', topic: 'Coding', subtopic: 'Set dedup',
+    question: 'Remove duplicate session IDs from a list while preserving first-seen order. O(n).',
+    obsidianSection: '## Coding — Set Patterns', weekCovered: 1, difficulty: 'easy',
+  },
+  {
+    id: 'Q-CODE-003', topic: 'Coding', subtopic: 'Frequency / Top-K',
+    question: 'Given a list of page views, return the top 3 most visited pages. (Counter + most_common)',
+    obsidianSection: '## Coding — Frequency', weekCovered: 2, difficulty: 'easy',
+  },
+  {
+    id: 'Q-CODE-004', topic: 'Coding', subtopic: 'Sliding window',
+    question: 'Find all users active in any consecutive 7-day window (at least 3 sessions in 7 days).',
+    obsidianSection: '## Coding — Sliding Window', weekCovered: 2, difficulty: 'medium',
+  },
 ]
 
 // ─── HOW TO UPDATE DAILY ──────────────────────────────────────────────────────
