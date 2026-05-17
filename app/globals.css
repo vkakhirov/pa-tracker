@@ -115,6 +115,35 @@ html { font-size: 16px; }
   --accent-glow:   rgba(251, 146, 60, 0.28);
 }
 
+[data-theme="light"] {
+  --bg:            #f8fafc;
+  --bg-card:       rgba(0, 0, 0, 0.028);
+  --bg-glass:      rgba(255, 255, 255, 0.72);
+  --bg-hover:      rgba(0, 0, 0, 0.05);
+  --bg-input:      rgba(0, 0, 0, 0.04);
+  --border:        rgba(0, 0, 0, 0.08);
+  --border-bright: rgba(0, 0, 0, 0.16);
+  --ink:           #0f172a;
+  --ink-dim:       #475569;
+  --ink-faint:     #94a3b8;
+  --accent:        #2563eb;
+  --accent-dim:    rgba(37, 99, 235, 0.1);
+  --accent-glow:   rgba(37, 99, 235, 0.2);
+  --green:         #16a34a;
+  --green-dim:     rgba(22, 163, 74, 0.1);
+  --green-glow:    rgba(22, 163, 74, 0.18);
+  --red:           #dc2626;
+  --red-dim:       rgba(220, 38, 38, 0.1);
+  --yellow:        #d97706;
+  --yellow-dim:    rgba(217, 119, 6, 0.1);
+  --yellow-glow:   rgba(217, 119, 6, 0.2);
+  --purple:        #7c3aed;
+  --purple-dim:    rgba(124, 58, 237, 0.1);
+  --purple-glow:   rgba(124, 58, 237, 0.18);
+  --orange:        #ea580c;
+  --orange-dim:    rgba(234, 88, 12, 0.1);
+}
+
 /* ════════════════════════════════════════════
    Tailwind inline theme
    ════════════════════════════════════════════ */

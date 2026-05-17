@@ -61,7 +61,7 @@ export function ThemePicker() {
                   style={{ background: theme === t.id ? 'rgba(255,255,255,0.06)' : 'transparent' }}>
                   {/* Background + accent swatch */}
                   <div className="relative w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 border"
-                    style={{ borderColor: theme === t.id ? t.accent + '60' : 'rgba(255,255,255,0.1)' }}>
+                    style={{ borderColor: theme === t.id ? t.accent + '80' : t.id === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)' }}>
                     <div className="absolute inset-0" style={{ background: t.bg }} />
                     {/* Grid lines to show texture */}
                     <div className="absolute inset-0 opacity-20"

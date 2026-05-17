@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-export type ThemeId = 'obsidian' | 'midnight' | 'forest' | 'warm'
+export type ThemeId = 'obsidian' | 'midnight' | 'forest' | 'warm' | 'light'
 
 export interface Theme {
   id: ThemeId
@@ -39,6 +39,13 @@ export const THEMES: Theme[] = [
     bg: '#0d0905',
     accent: '#fb923c',
     description: 'Charcoal amber',
+  },
+  {
+    id: 'light',
+    label: 'Light',
+    bg: '#f8fafc',
+    accent: '#2563eb',
+    description: 'Clean white',
   },
 ]
 
