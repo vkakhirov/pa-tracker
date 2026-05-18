@@ -209,6 +209,27 @@ export const MISTAKES: Mistake[] = [
     ],
     remediationDone: [false, false, false],
   },
+  {
+    id: 'ML-008',
+    problem: '#387 First Unique Character',
+    date: '2026-05-18',
+    week: 'Week 1, Day 2',
+    status: 'active',
+    bugs: [
+      { line: 'if n in str_val: return i', explanation: 'Returns on first REPEAT, not first unique — single-pass trap (same root as ML-001)' },
+      { line: 'str[n] = 0', explanation: '`str` is Python built-in — shadowing it. Use `count[n]`' },
+      { line: 'elif: return -1', explanation: '`elif` after statement + no condition — syntax error' },
+      { line: 'Single loop for count + find', explanation: "Can't judge unique until ALL chars counted. Two loops required." },
+    ],
+    rootCause: "Single-pass illusion: tried to count and find unique in same loop. You need full count before judging any char.",
+    remediation: [
+      'Say aloud before writing: "Count first. Judge second. Two loops."',
+      'Write Solution A from memory — no notes',
+      'Explain why second loop uses enumerate(s) not .items()',
+      'Re-solve #387 on LeetCode blind',
+    ],
+    remediationDone: [false, false, false, false],
+  },
 ]
 
 export const WEEKS: Week[] = [

@@ -22,7 +22,7 @@ const DEFAULT_STATE: StoredState = {
     'w1d1-3': 'done',
     'w1d2-1': 'done',
   },
-  gateStatuses: { G1: 'passed', G2: 'active' },
+  gateStatuses: { G1: 'passed', G2: 'passed' },
   remediationDone: {},
   streak: 4,
   lastSessionDate: '2026-05-16',
