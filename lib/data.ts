@@ -230,6 +230,26 @@ export const MISTAKES: Mistake[] = [
     ],
     remediationDone: [false, false, false, false],
   },
+  {
+    id: 'ML-009',
+    problem: '#49 Group Anagrams (recall)',
+    date: '2026-05-18',
+    week: 'Week 1, Day 2',
+    status: 'active',
+    bugs: [
+      { line: 'key = sorted(word)', explanation: 'sorted() returns list — unhashable, can\'t be dict key. Fix: tuple(sorted(word))' },
+      { line: 'batch[key] = i', explanation: 'Stores index, overwrites on each hit. Need list accumulator: batch[key].append(word)' },
+      { line: 'no init for batch[key]', explanation: 'append() on missing key → KeyError. Fix: defaultdict(list) auto-inits []' },
+      { line: 'enumerate(words)', explanation: 'i never used. Just: for word in words' },
+    ],
+    rootCause: 'Dict value must be a list accumulator, not a scalar. defaultdict(list) handles init automatically — same ML-001 pattern (accumulator init).',
+    remediation: [
+      'Write from memory: defaultdict(list) + tuple(sorted(word)) + .append(word)',
+      'Say before writing: "key = tuple (hashable), value = list (accumulator)"',
+      'Re-solve #49 on LeetCode blind',
+    ],
+    remediationDone: [false, false, false],
+  },
 ]
 
 export const WEEKS: Week[] = [
