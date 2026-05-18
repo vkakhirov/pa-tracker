@@ -15,20 +15,9 @@ import { EatFrog } from '@/components/EatFrog'
 import { InterviewQBank } from '@/components/InterviewQBank'
 import { JobTracker } from '@/components/JobTracker'
 
-// Set this once — dashboard auto-tracks week/day from here
-const START_DATE = '2026-05-13'
-
-function getCurrentPosition() {
-  const start = new Date(START_DATE)
-  const today = new Date()
-  const daysSince = Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
-  const totalDay = Math.max(0, daysSince)
-  const week = Math.min(Math.floor(totalDay / 7) + 1, 4)
-  const day = Math.min((totalDay % 7) + 1, 7)
-  return { week, day }
-}
-
-const { week: CURRENT_WEEK, day: CURRENT_DAY } = getCurrentPosition()
+// Update manually when a gate is passed and you move to the next day
+const CURRENT_WEEK = 1
+const CURRENT_DAY = 2
 
 type Tab = 'dashboard' | 'interview' | 'jobs'
 
