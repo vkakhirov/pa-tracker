@@ -24,9 +24,9 @@ const DEFAULT_STATE: StoredState = {
   },
   gateStatuses: { G1: 'passed', G2: 'passed' },
   remediationDone: {},
-  streak: 4,
-  lastSessionDate: '2026-05-16',
-  completedDates: ['2026-05-13', '2026-05-14', '2026-05-15', '2026-05-16'],
+  streak: 0,
+  lastSessionDate: '2026-05-18',
+  completedDates: ['2026-05-13', '2026-05-14', '2026-05-15', '2026-05-16', '2026-05-18'],
   jobs: [],
 }
 
