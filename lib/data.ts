@@ -83,6 +83,14 @@ export interface SessionStep {
   items: string[]
 }
 
+export interface Flashcard {
+  id: string
+  front: string
+  back: string[]
+  drill: string
+  linkedMistakes?: string[]
+}
+
 export const GATES: Gate[] = [
   {
     id: 'G1',
@@ -271,7 +279,7 @@ export const MISTAKES: Mistake[] = [
     problem: '#387 First Unique Character (pass 2)',
     date: '2026-05-25',
     week: 'Week 1, Day 2',
-    status: 'active',
+    status: 'remediated',
     bugs: [
       { line: 'for i,x in encounters(amount_enc)', explanation: 'Made-up function + iterating dict. Pass 2 must iterate the STRING: enumerate(s)' },
       { line: 'if amount_enc[n]==1', explanation: 'n is pass-1 loop var, out of scope. Use current char from enumerate: amount_enc[x]==1' },
@@ -283,7 +291,29 @@ export const MISTAKES: Mistake[] = [
       'Recite rule: "return -1 after loop — only when entire string scanned"',
       'Write full #387 from memory once more, zero bugs',
     ],
-    remediationDone: [false, false, false],
+    remediationDone: [true, true, true],
+  },
+  {
+    id: 'ML-011',
+    problem: '#14 Longest Common Prefix',
+    date: '2026-05-29',
+    week: 'Week 1, Day 2',
+    status: 'remediated',
+    bugs: [
+      { line: 'Def longest_pre', explanation: '`Def` capitalized → SyntaxError. Keyword is lowercase `def`.' },
+      { line: 'prefix == strs[0]', explanation: '`==` is comparison, does nothing. Assignment needs single `=`: prefix = strs[0]' },
+      { line: 'i.startwith(prefix)', explanation: 'Typo — method is `startswith` (s in the middle).' },
+      { line: 'while ... then:', explanation: 'Python has no `then`. Loop header is just `while cond:`' },
+      { line: 'while startswith: return prefix', explanation: 'Logic inverted. Shrink WHILE the string does NOT start with prefix: `while not s.startswith(prefix): prefix = prefix[:-1]`. Return AFTER the for-loop.' },
+    ],
+    rootCause: 'String-shrink mental model inverted + basic syntax slips (=/==, def, startswith). Returned too early inside the loop.',
+    remediation: [
+      'Recite: "for each string, shrink prefix WHILE not startswith — then move to next string"',
+      'Recite: "return prefix AFTER the for-loop, not inside"',
+      'Add empty-prefix guard: if prefix == "" : return ""',
+      'Re-solve #14 on LeetCode blind, zero bugs',
+    ],
+    remediationDone: [true, true, true, true],
   },
 ]
 
@@ -308,8 +338,8 @@ export const WEEKS: Week[] = [
         frog: 'Group Anagrams first',
         problems: [
           { id: 'w1d2-1', leetcode: 49, title: 'Group Anagrams', pattern: 'Dict of lists', paRelevance: 'Grouping events by key', status: 'done', date: '2026-05-16', url: 'https://leetcode.com/problems/group-anagrams/' },
-          { id: 'w1d2-2', leetcode: 387, title: 'First Unique Character', pattern: 'Dict + iteration', paRelevance: 'Category frequency in logs', status: 'pending', url: 'https://leetcode.com/problems/first-unique-character-in-a-string/' },
-          { id: 'w1d2-3', leetcode: 14, title: 'Longest Common Prefix', pattern: 'String slicing', paRelevance: 'URL/path parsing', status: 'pending', url: 'https://leetcode.com/problems/longest-common-prefix/' },
+          { id: 'w1d2-2', leetcode: 387, title: 'First Unique Character', pattern: 'Dict + iteration', paRelevance: 'Category frequency in logs', status: 'done', date: '2026-05-29', url: 'https://leetcode.com/problems/first-unique-character-in-a-string/' },
+          { id: 'w1d2-3', leetcode: 14, title: 'Longest Common Prefix', pattern: 'String slicing', paRelevance: 'URL/path parsing', status: 'done', date: '2026-05-31', url: 'https://leetcode.com/problems/longest-common-prefix/' },
         ],
       },
       {
@@ -417,6 +447,65 @@ export const SESSION_STEPS: SessionStep[] = [
       'Mistake audit: did any ML-00X pattern fire?',
       'One flashcard: the fix, not the bug',
     ],
+  },
+]
+
+export const FLASHCARDS: Flashcard[] = [
+  {
+    id: 'FC-001',
+    front: '= vs ==  — which one?',
+    back: [
+      '=   puts value IN   (assign)  →  x = 5 · seen[n] = i',
+      '==  ASKS equal?  (compare → True/False)  →  if x == 5 · while prefix == ""',
+      'RULE: inside if / while → always ==   ·   making a variable → always =',
+    ],
+    drill: '"if/while asks, so ==" · "naming puts in, so ="',
+    linkedMistakes: ['ML-006', 'ML-008', 'ML-011'],
+  },
+  {
+    id: 'FC-002',
+    front: 'Empty set / list / dict — literal?',
+    back: [
+      'set()   empty set   (NO {} — that is a dict!)',
+      '[]      empty list',
+      '{}      empty dict',
+      'set[] → SyntaxError. () = call/construct, [] = index/slice.',
+    ],
+    drill: '"set-open-paren, not set-bracket"',
+    linkedMistakes: ['ML-007'],
+  },
+  {
+    id: 'FC-003',
+    front: 'Dict vs set — add a key?',
+    back: [
+      'dict:  seen[n] = i        (bracket assign, key→value)',
+      'set:   seen.add(n)        (.add method, value only)',
+      'Two Sum uses a DICT: seen[n] = i, return [seen[complement], i]',
+    ],
+    drill: '"dict bracket-equals · set dot-add"',
+    linkedMistakes: ['ML-005', 'ML-006'],
+  },
+  {
+    id: 'FC-004',
+    front: 'First Unique #387 — two-pass shape?',
+    back: [
+      'Pass 1: count chars → for n in s: cnt[n] = cnt.get(n,0)+1',
+      'Pass 2: enumerate the STRING → for i,x in enumerate(s): if cnt[x]==1: return i',
+      'return -1 AFTER the loop (only when whole string scanned)',
+    ],
+    drill: '"pass 2 = enumerate(s), return -1 after loop"',
+    linkedMistakes: ['ML-008', 'ML-010'],
+  },
+  {
+    id: 'FC-005',
+    front: 'Dict value = accumulator — init?',
+    back: [
+      'Need a list per key? → defaultdict(list) auto-inits []',
+      'Key must be hashable: tuple(sorted(word)), NOT sorted(word) (list).',
+      'Then: groups[key].append(word)',
+    ],
+    drill: '"key = tuple (hashable), value = list (accumulator)"',
+    linkedMistakes: ['ML-009'],
   },
 ]
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { GATES, MISTAKES, WEEKS, SESSION_STEPS, HABIT_STACK, AREA_WEIGHTS } from '@/lib/data'
+import { GATES, MISTAKES, WEEKS, SESSION_STEPS, HABIT_STACK, AREA_WEIGHTS, FLASHCARDS } from '@/lib/data'
 import { useStore } from '@/lib/store'
 import { Header } from '@/components/Header'
 import { StatsBar } from '@/components/StatsBar'
@@ -11,6 +11,7 @@ import { MistakeLog } from '@/components/MistakeLog'
 import { WeekProgress } from '@/components/WeekProgress'
 import { SessionBlueprint } from '@/components/SessionBlueprint'
 import { HabitStack } from '@/components/HabitStack'
+import { FlashcardDeck } from '@/components/FlashcardDeck'
 import { EatFrog } from '@/components/EatFrog'
 import { InterviewQBank } from '@/components/InterviewQBank'
 import { JobTracker } from '@/components/JobTracker'
@@ -73,6 +74,7 @@ export default function Dashboard() {
             <div className="border-r p-5 flex flex-col gap-4" style={{ borderColor: 'var(--border)' }}>
               <EatFrog weeks={WEEKS} currentWeek={CURRENT_WEEK} currentDay={CURRENT_DAY} />
               <GatePanel gates={GATES} gateStatuses={state.gateStatuses} onToggle={setGateStatus} />
+              <FlashcardDeck cards={FLASHCARDS} />
               <HabitStack habits={HABIT_STACK} />
             </div>
             <div className="border-r p-5" style={{ borderColor: 'var(--border)' }}>
