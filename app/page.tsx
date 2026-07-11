@@ -18,7 +18,7 @@ import { JobTracker } from '@/components/JobTracker'
 
 // Update manually when a gate is passed and you move to the next day
 const CURRENT_WEEK = 1
-const CURRENT_DAY = 2
+const CURRENT_DAY = 3
 
 type Tab = 'dashboard' | 'interview' | 'jobs'
 

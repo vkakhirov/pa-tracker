@@ -108,6 +108,14 @@ export const GATES: Gate[] = [
     linkedMistakes: ['ML-005', 'ML-006'],
     status: 'passed',
   },
+  {
+    id: 'G3',
+    label: 'Gate 3',
+    unlocksDay: 'Day 3 (dict value semantics)',
+    requirement: 'Write First Unique Char + Group Anagrams from memory, zero bugs. State scalar-vs-accumulator rule cold.',
+    linkedMistakes: ['ML-005', 'ML-006', 'ML-008', 'ML-009'],
+    status: 'passed',
+  },
 ]
 
 export const MISTAKES: Mistake[] = [
@@ -238,7 +246,7 @@ export const MISTAKES: Mistake[] = [
     problem: '#387 First Unique Character',
     date: '2026-05-18',
     week: 'Week 1, Day 2',
-    status: 'active',
+    status: 'gated',
     bugs: [
       { line: 'if n in str_val: return i', explanation: 'Attempt 1: returns on first REPEAT — single-pass trap. Two loops required.' },
       { line: 'str[n] = 0', explanation: 'Attempt 1: `str` is Python built-in — shadows it. Use `count[n]`' },
@@ -259,7 +267,7 @@ export const MISTAKES: Mistake[] = [
     problem: '#49 Group Anagrams (recall)',
     date: '2026-05-18',
     week: 'Week 1, Day 2',
-    status: 'active',
+    status: 'gated',
     bugs: [
       { line: 'key = sorted(word)', explanation: 'sorted() returns list — unhashable, can\'t be dict key. Fix: tuple(sorted(word))' },
       { line: 'batch[key] = i', explanation: 'Stores index, overwrites on each hit. Need list accumulator: batch[key].append(word)' },
