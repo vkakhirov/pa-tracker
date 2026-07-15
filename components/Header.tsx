@@ -2,9 +2,9 @@
 import { motion } from 'motion/react'
 import { ThemePicker } from '@/components/ThemePicker'
 
-interface HeaderProps { streak: number; currentWeek: number; currentDay: number }
+interface HeaderProps { streak: number; currentWeek: number; currentDay: number; language: 'ru' | 'en'; onLanguageChange: (language: 'ru' | 'en') => void }
 
-export function Header({ streak, currentWeek, currentDay }: HeaderProps) {
+export function Header({ streak, currentWeek, currentDay, language, onLanguageChange }: HeaderProps) {
   const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
   return (
     <motion.header
@@ -33,11 +33,11 @@ export function Header({ streak, currentWeek, currentDay }: HeaderProps) {
             <span className="text-sm font-bold tracking-tight" style={{ color: 'var(--ink)' }}>PA Tracker</span>
             <span className="text-xs px-2 py-0.5 rounded-full font-mono font-semibold"
               style={{ background: 'var(--accent-dim)', color: 'var(--accent)', border: '1px solid rgba(79,142,247,0.2)' }}>
-              Yandex
+              Ozon Bank · DS
             </span>
           </div>
           <div className="text-xs mt-0.5 font-mono" style={{ color: 'var(--ink-faint)' }}>
-            Week {currentWeek} · Day {currentDay} · {today}
+            {language === 'ru' ? `Неделя ${currentWeek} · День ${currentDay}` : `Week ${currentWeek} · Day ${currentDay}`} · {today}
           </div>
         </div>
       </div>
@@ -45,6 +45,9 @@ export function Header({ streak, currentWeek, currentDay }: HeaderProps) {
       {/* Right: theme picker + streak */}
       <div className="flex items-center gap-3">
         <ThemePicker />
+        <div className="language-switch" aria-label="Language switcher">
+          {(['ru', 'en'] as const).map(lang => <button key={lang} onClick={() => onLanguageChange(lang)} className={language === lang ? 'active' : ''}>{lang.toUpperCase()}</button>)}
+        </div>
 
         <motion.div
           whileHover={{ scale: 1.04 }}
@@ -58,7 +61,7 @@ export function Header({ streak, currentWeek, currentDay }: HeaderProps) {
           </div>
           <div>
             <div className="text-base font-bold leading-none font-mono" style={{ color: 'var(--yellow)' }}>{streak}</div>
-            <div className="text-xs" style={{ color: 'var(--ink-faint)' }}>streak</div>
+            <div className="text-xs" style={{ color: 'var(--ink-faint)' }}>{language === 'ru' ? 'серия' : 'streak'}</div>
           </div>
         </motion.div>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { GATES, MISTAKES, WEEKS, SESSION_STEPS, HABIT_STACK, AREA_WEIGHTS, FLASHCARDS } from '@/lib/data'
 import { useStore } from '@/lib/store'
@@ -15,14 +15,16 @@ import { FlashcardDeck } from '@/components/FlashcardDeck'
 import { EatFrog } from '@/components/EatFrog'
 import { InterviewQBank } from '@/components/InterviewQBank'
 import { JobTracker } from '@/components/JobTracker'
+import { FocusLab } from '@/components/FocusLab'
 
 // Update manually when a gate is passed and you move to the next day
 const CURRENT_WEEK = 1
 const CURRENT_DAY = 3
 
-type Tab = 'dashboard' | 'interview' | 'jobs'
+type Tab = 'focus' | 'dashboard' | 'interview' | 'jobs'
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: 'focus', label: 'Focus Lab' },
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'interview', label: 'Interview Bank' },
   { id: 'jobs',      label: 'Jobs' },
@@ -30,7 +32,10 @@ const TABS: { id: Tab; label: string }[] = [
 
 export default function Dashboard() {
   const { state, mounted, setProblemStatus, setGateStatus, toggleRemediation, logSession, addJob, updateJobStatus, updateJob, deleteJob } = useStore()
-  const [activeTab, setActiveTab] = useState<Tab>('dashboard')
+  const [activeTab, setActiveTab] = useState<Tab>('focus')
+  const [language, setLanguage] = useState<'ru' | 'en'>('ru')
+  useEffect(() => { const saved = localStorage.getItem('pa-language'); if (saved === 'en' || saved === 'ru') setLanguage(saved) }, [])
+  function changeLanguage(next: 'ru' | 'en') { setLanguage(next); localStorage.setItem('pa-language', next) }
 
   if (!mounted) {
     return (
@@ -42,7 +47,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-      <Header streak={state.streak} currentWeek={CURRENT_WEEK} currentDay={CURRENT_DAY} />
+      <Header streak={state.streak} currentWeek={CURRENT_WEEK} currentDay={CURRENT_DAY} language={language} onLanguageChange={changeLanguage} />
 
       {/* Tab nav */}
       <div className="flex items-center gap-1 border-b px-6" style={{ borderColor: 'var(--border)', background: 'var(--bg-header)' }}>
@@ -50,7 +55,7 @@ export default function Dashboard() {
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className="relative px-4 py-3 text-xs font-mono uppercase tracking-widest cursor-pointer transition-all duration-200"
             style={{ color: activeTab === tab.id ? 'var(--accent)' : 'var(--ink-faint)', background: 'transparent', border: 'none' }}>
-            {tab.label}
+            {language === 'ru' ? ({ focus: 'Фокус', dashboard: 'План', interview: 'Вопросы', jobs: 'Вакансии' } as Record<Tab, string>)[tab.id] : tab.label}
             {tab.id === 'jobs' && state.jobs.length > 0 && (
               <span className="ml-1.5 text-xs px-1.5 py-0.5 rounded-full font-mono"
                 style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>
@@ -66,6 +71,8 @@ export default function Dashboard() {
           </button>
         ))}
       </div>
+
+      {activeTab === 'focus' && <FocusLab onSessionComplete={logSession} language={language} />}
 
       {activeTab === 'dashboard' && (
         <>
