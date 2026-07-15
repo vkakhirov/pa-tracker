@@ -18,8 +18,8 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "PA Tracker — Yandex Interview Prep",
-  description: "Progress dashboard for Yandex Product Analyst interview prep",
+  title: "PA Focus Lab — Ozon Bank DS Interview Prep",
+  description: "Adaptive desktop preparation cockpit for the Ozon Bank Data Scientist internship",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
