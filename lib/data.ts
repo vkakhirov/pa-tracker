@@ -116,6 +116,14 @@ export const GATES: Gate[] = [
     linkedMistakes: ['ML-005', 'ML-006', 'ML-008', 'ML-009'],
     status: 'passed',
   },
+  {
+    id: 'G4',
+    label: 'Regression Gate (recurring, ~2wk)',
+    unlocksDay: 'Recurring — not a one-time unlock',
+    requirement: 'Cold re-solve Two Sum + a set/list dedup pattern + Longest Common Prefix from memory, zero bugs. Re-run every ~2 weeks so decay gets caught before a gap does — added after the 2026-07-23 regression (ML-012, ML-013, ML-014) on material already passed back in May.',
+    linkedMistakes: ['ML-012', 'ML-013', 'ML-014'],
+    status: 'active',
+  },
 ]
 
 export const MISTAKES: Mistake[] = [
@@ -322,6 +330,61 @@ export const MISTAKES: Mistake[] = [
       'Re-solve #14 on LeetCode blind, zero bugs',
     ],
     remediationDone: [true, true, true, true],
+  },
+  {
+    id: 'ML-012',
+    problem: '#1 Two Sum (regression, cold recall after ~2mo gap)',
+    date: '2026-07-23',
+    week: 'Regression check',
+    status: 'active',
+    bugs: [
+      { line: 'seen[n] = i  ← written BEFORE the compliment check', explanation: 'Stores current n before checking compliment. If target == 2*n, compliment equals n and matches itself same iteration → wrong pair [i, i].' },
+    ],
+    rootCause: 'ML-001/ML-006 family (mutate-before-check) resurfacing after a ~2 month gap with no practice — Gate 2 pattern decayed from disuse, not a new misunderstanding.',
+    remediation: [
+      'Move seen[n] = i to AFTER the compliment check',
+      'Trace edge case nums=[3,3] target=6 by hand — confirms the bug and the fix',
+      'Rewrite Two Sum from memory 2x with correct order, no lookback',
+    ],
+    remediationDone: [false, false, false],
+  },
+  {
+    id: 'ML-013',
+    problem: 'Freehand drill — set/list method confusion (unlabeled dedup attempt)',
+    date: '2026-07-23',
+    week: 'Regression check',
+    status: 'active',
+    bugs: [
+      { line: 'filtered.add(sort[i])', explanation: "Lists don't have .add() (that's a set method) — need .append(). Also sort[i] is invalid — sort isn't subscriptable." },
+      { line: 'result  (used with no init)', explanation: 'result.add(i) called but result never assigned — needs result = [] first, and .append not .add.' },
+      { line: 'if i in filtered: result.add(i)', explanation: 'Fires every pass since i was just added same iteration — never actually detects duplicates across iterations.' },
+    ],
+    rootCause: 'Same ML-001/ML-005/ML-007 family (list vs set API + init-before-use) resurfacing — 2mo gap, no spaced repetition since last pass.',
+    remediation: [
+      'Drill: list.append() vs set.add() — write both 3x, say the difference aloud',
+      'Rewrite as clean duplicate-finder: seen=set(), dup=[]; for i in nums: if i in seen: dup.append(i) else: seen.add(i)',
+    ],
+    remediationDone: [false, false],
+  },
+  {
+    id: 'ML-014',
+    problem: '#14 Longest Common Prefix (regression — was remediated 2026-05-29/31, redone cold today)',
+    date: '2026-07-23',
+    week: 'Regression check',
+    status: 'active',
+    bugs: [
+      { line: 'base = strs[0:1]', explanation: 'Slice returns a list [strs[0]], not the string itself. Need base = strs[0]. New slip, not one of the original ML-011 bugs.' },
+      { line: 'for i in strs  (missing colon)', explanation: 'Syntax error — needs for i in strs:' },
+      { line: 'Incomplete: no shrink-on-mismatch logic', explanation: 'startswith(base) alone never converges — need the shrink loop from ML-011: while not i.startswith(base): base = base[:-1]' },
+    ],
+    rootCause: 'Full regression on already-remediated material (ML-011, passed ~2mo ago) — worse than the original attempt, since even the slice-vs-index basics slipped this time. Confirms decay was real, not just Two Sum/dedup.',
+    remediation: [
+      'Fix base = strs[0] (string, not list)',
+      'Re-apply ML-011 shrink loop from memory: while not s.startswith(prefix): prefix = prefix[:-1]',
+      'Complete + trace on ["flower","flow","flight"] by hand',
+      'Re-solve #14 blind once clean — this is the actual Regression Gate (G4) check for this pattern',
+    ],
+    remediationDone: [false, false, false, false],
   },
 ]
 
