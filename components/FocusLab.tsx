@@ -1,38 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { FOCUS_BANK as BANK, type FocusArea as Area } from '@/lib/data'
 
-type Area = 'Probability' | 'Statistics & A/B' | 'SQL' | 'Python & ML'
 type Rating = 'again' | 'hard' | 'good'
-
-type Drill = { title: string; prompt: string; hint: string; minutes: number }
-
-const BANK: Record<Area, Drill[]> = {
-  Probability: [
-    { title: 'Coins · conditional probability', prompt: 'Two fair coins are tossed. Given that at least one is heads, what is P(both are heads)? Explain the sample space.', hint: 'Condition first: remove TT. Do not treat “at least one” as a specific coin.', minutes: 12 },
-    { title: 'Cards · Bayes', prompt: 'Draw two cards without replacement. What is P(the first was an ace | the second is an ace)? Derive it, then explain intuitively.', hint: 'Symmetry is a useful check; also write Bayes explicitly.', minutes: 14 },
-    { title: 'Traffic lights · expectation', prompt: 'You cross 5 independent traffic lights, each red with p=0.4. Find E[red], Var(red), and P(at least 2 red).', hint: 'Recognize a Binomial random variable.', minutes: 15 },
-    { title: 'Chess · combinations', prompt: 'Eight rooks are placed uniformly on an 8×8 board, one per row. What is the probability no two attack each other?', hint: 'Count all column assignments, then favorable permutations.', minutes: 14 },
-  ],
-  'Statistics & A/B': [
-    { title: 'A/B · conversion', prompt: 'Control: 10,000 users, 8.0% conversion. Treatment: 9,800 users, 8.6%. Formulate H₀/H₁, choose a test, and describe the decision.', hint: 'Two-proportion z-test; discuss practical significance and confidence interval.', minutes: 18 },
-    { title: 'T-test · assumptions', prompt: 'When is a Welch t-test preferable to Student’s t-test? What changes when observations are paired?', hint: 'Variance equality and independence are the key distinctions.', minutes: 12 },
-    { title: 'Bootstrap · confidence interval', prompt: 'Explain how to bootstrap a 95% CI for median transaction value. What can go wrong with dependent observations?', hint: 'Resample units, not rows, when rows share a customer.', minutes: 15 },
-    { title: 'Experiment design · banking', prompt: 'Design an experiment for a new credit-limit recommendation. Choose unit, primary metric, guardrails, duration, and risks.', hint: 'Think defaults, revenue, approval rate, interference and delayed outcomes.', minutes: 20 },
-  ],
-  SQL: [
-    { title: 'Window functions · retention', prompt: 'Given payments(user_id, paid_at, amount), return each user’s first payment, previous payment, and days since previous payment.', hint: 'MIN() OVER and LAG() OVER (PARTITION BY user_id ORDER BY paid_at).', minutes: 18 },
-    { title: 'WITH · cohort quality', prompt: 'Compute month-1 repeat-payment rate by acquisition month. State the grain of every CTE before writing SQL.', hint: 'Build user cohort → activity month → aggregate. Protect against duplicate rows.', minutes: 22 },
-    { title: 'JOIN · missing customers', prompt: 'Find customers who applied for credit but have no decision. Explain why LEFT JOIN + IS NULL is safer than NOT IN here.', hint: 'NULL semantics make NOT IN surprising.', minutes: 12 },
-    { title: 'Ranking · top products', prompt: 'Return the top 3 products by revenue inside each category, including ties.', hint: 'Aggregate first, then DENSE_RANK by category.', minutes: 15 },
-  ],
-  'Python & ML': [
-    { title: 'pandas · customer features', prompt: 'From transactions, create per-customer recency, frequency, mean amount, and 30-day spend without row-wise apply.', hint: 'groupby/agg, named aggregations, datetime arithmetic.', minutes: 18 },
-    { title: 'pandas · data quality', prompt: 'A merge unexpectedly doubles the row count. Diagnose it and show checks that prevent silent many-to-many joins.', hint: 'Check key uniqueness and use merge(validate=...).', minutes: 14 },
-    { title: 'ML · credit validation', prompt: 'Design validation for a default model. Why can a random split overestimate production quality?', hint: 'Time split, leakage, delayed labels, stability across cohorts.', minutes: 20 },
-    { title: 'Boosting · imbalance', prompt: 'For a 3% default target, compare ROC-AUC, PR-AUC, recall, precision and calibration. Which matter to the bank?', hint: 'Tie metric choice to the decision threshold and cost of errors.', minutes: 18 },
-  ],
-}
 
 const AREAS = Object.keys(BANK) as Area[]
 const COLOR: Record<Area, string> = { Probability: '#60a5fa', 'Statistics & A/B': '#c084fc', SQL: '#fbbf24', 'Python & ML': '#34d399' }
@@ -117,6 +88,10 @@ export function FocusLab({ onSessionComplete, language }: { onSessionComplete: (
             <div className="progress"><i style={{ width: `${mastery[area]}%` }} /></div>
             <div className="drill-body">
               <div className="drill-meta"><span>{q.title}</span><span>{q.minutes} {ru ? 'МИН' : 'MIN'}</span></div>
+              <div className="theory-block">
+                <span className="theory-label">{ru ? 'Теория' : 'Theory'}</span>
+                <p>{ru ? q.theoryRu : q.theoryEn}</p>
+              </div>
               <h2>{q.prompt}</h2>
               <button className="hint-toggle" onClick={() => setShowHint(h => ({ ...h, [area]: !h[area] }))}>{showHint[area] ? (ru ? 'Скрыть подсказку' : 'Hide approach') : (ru ? 'Нужна подсказка?' : 'Need an approach?')}</button>
               {showHint[area] && <p className="hint">{q.hint}</p>}

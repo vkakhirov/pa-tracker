@@ -580,6 +580,156 @@ export const FLASHCARDS: Flashcard[] = [
   },
 ]
 
+export type FocusArea = 'Probability' | 'Statistics & A/B' | 'SQL' | 'Python & ML'
+
+export interface FocusDrill {
+  title: string
+  prompt: string
+  hint: string
+  theoryEn: string
+  theoryRu: string
+  minutes: number
+}
+
+export const FOCUS_BANK: Record<FocusArea, FocusDrill[]> = {
+  Probability: [
+    {
+      title: 'Coins · conditional probability',
+      prompt: 'Two fair coins are tossed. Given that at least one is heads, what is P(both are heads)? Explain the sample space.',
+      hint: 'Condition first: remove TT. Do not treat “at least one” as a specific coin.',
+      theoryEn: 'Conditional probability: P(A|B) = P(A∩B)/P(B). The sample space for 2 coins is {HH,HT,TH,TT}, each 1/4. Conditioning on "at least one heads" removes TT, leaving 3 equally likely outcomes {HH,HT,TH}. Answer = P(HH)/P(at least one H) = (1/4)/(3/4) = 1/3 — not 1/2, because you are not conditioning on a specific coin.',
+      theoryRu: 'Условная вероятность: P(A|B) = P(A∩B)/P(B). Пространство исходов для двух монет: (орёл,орёл), (орёл,решка), (решка,орёл), (решка,решка) — по 1/4 каждый. Условие «хотя бы один орёл» убирает (решка,решка), остаются 3 равновероятных исхода. Ответ = P(оба орла)/P(хотя бы один орёл) = (1/4)/(3/4) = 1/3 — не 1/2, потому что условие не про конкретную монету, а про факт «хотя бы один».',
+      minutes: 12,
+    },
+    {
+      title: 'Cards · Bayes',
+      prompt: 'Draw two cards without replacement. What is P(the first was an ace | the second is an ace)? Derive it, then explain intuitively.',
+      hint: 'Symmetry is a useful check; also write Bayes explicitly.',
+      theoryEn: 'Bayes: P(A|B) = P(B|A)P(A)/P(B). Here P(first=ace | second=ace) = P(second=ace|first=ace)·P(first=ace) / P(second=ace). By symmetry, P(second=ace) = P(first=ace) = 4/52 (any card is equally likely to be any rank regardless of draw order), so writing Bayes explicitly is what proves the symmetry argument rigorously rather than just asserting it.',
+      theoryRu: 'Байес: P(A|B) = P(B|A)P(A)/P(B). Здесь P(первая=туз | вторая=туз) = P(вторая=туз|первая=туз)·P(первая=туз) / P(вторая=туз). По симметрии P(вторая=туз) = P(первая=туз) = 4/52 (любая карта с равной вероятностью может быть любого ранга независимо от порядка). Явная формула Байеса — способ строго доказать этот симметрийный аргумент, а не просто заявить его.',
+      minutes: 14,
+    },
+    {
+      title: 'Traffic lights · expectation',
+      prompt: 'You cross 5 independent traffic lights, each red with p=0.4. Find E[red], Var(red), and P(at least 2 red).',
+      hint: 'Recognize a Binomial random variable.',
+      theoryEn: 'A sum of independent Bernoulli(p) trials is Binomial(n,p). Here n=5, p=0.4: E[red] = np = 2, Var(red) = np(1−p) = 1.2. P(at least 2 red) = 1 − P(0 red) − P(1 red), using P(k) = C(n,k)pᵏ(1−p)ⁿ⁻ᵏ. Recognizing "n independent yes/no trials, same p" as Binomial is the whole trick — the rest is plugging into the formula.',
+      theoryRu: 'Сумма независимых испытаний Бернулли(p) — это Биномиальное(n,p). Здесь n=5, p=0.4: E[красный] = np = 2, Var(красный) = np(1−p) = 1.2. P(хотя бы 2 красных) = 1 − P(0) − P(1), где P(k) = C(n,k)pᵏ(1−p)ⁿ⁻ᵏ. Главное — распознать «n независимых да/нет испытаний с одинаковым p» как биномиальное распределение, дальше просто подстановка в формулу.',
+      minutes: 15,
+    },
+    {
+      title: 'Chess · combinations',
+      prompt: 'Eight rooks are placed uniformly on an 8×8 board, one per row. What is the probability no two attack each other?',
+      hint: 'Count all column assignments, then favorable permutations.',
+      theoryEn: 'Define the sample space first: each rook independently and uniformly picks a column, one per row, so total outcomes = 8⁸. "No two attack" means all 8 columns are distinct — a permutation of 8 columns — so favorable outcomes = 8!. P(no attack) = 8!/8⁸. The whole exercise is choosing the right sample space (with repetition allowed across rows) before counting favorable cases.',
+      theoryRu: 'Сначала пространство исходов: каждая ладья независимо и равновероятно выбирает столбец, по одной в ряд, всего исходов = 8⁸. «Никто никого не бьёт» значит все 8 столбцов различны — перестановка из 8, значит благоприятных исходов = 8!. P(не бьют) = 8!/8⁸. Всё упражнение сводится к правильному выбору пространства исходов (с повторением по рядам) прежде подсчёта благоприятных случаев.',
+      minutes: 14,
+    },
+  ],
+  'Statistics & A/B': [
+    {
+      title: 'A/B · conversion',
+      prompt: 'Control: 10,000 users, 8.0% conversion. Treatment: 9,800 users, 8.6%. Formulate H₀/H₁, choose a test, and describe the decision.',
+      hint: 'Two-proportion z-test; discuss practical significance and confidence interval.',
+      theoryEn: 'Two-proportion z-test: H0: p_control = p_treatment. Pooled p̂ = (x1+x2)/(n1+n2), SE = √(p̂(1−p̂)(1/n1+1/n2)), z = (p̂1−p̂2)/SE, compared to ±1.96 for α=0.05. Always pair the significance test with practical significance: is the lift worth the engineering/rollout cost, and does the 95% CI for the difference exclude 0?',
+      theoryRu: 'Z-тест для двух пропорций: H0: p_контроль = p_тест. Объединённая p̂ = (x1+x2)/(n1+n2), SE = √(p̂(1−p̂)(1/n1+1/n2)), z = (p̂1−p̂2)/SE, сравниваем с ±1.96 при α=0.05. Значимость всегда стоит дополнять практической значимостью: стоит ли лифт затрат на внедрение, и не пересекает ли 95% ДИ разницы ноль.',
+      minutes: 18,
+    },
+    {
+      title: 'T-test · assumptions',
+      prompt: 'When is a Welch t-test preferable to Student’s t-test? What changes when observations are paired?',
+      hint: 'Variance equality and independence are the key distinctions.',
+      theoryEn: "Student's t-test assumes equal variances between groups; Welch's does not (it adjusts degrees of freedom via the Welch-Satterthwaite equation) — Welch is the safer default since equal variance is rarely guaranteed, and it costs almost nothing when variances ARE equal. Paired data (same unit measured twice, e.g. before/after) needs a paired t-test on the differences, not an independent two-sample test — pairing removes between-subject variance and increases power.",
+      theoryRu: 'Т-тест Стьюдента предполагает равенство дисперсий групп; тест Уэлча — нет (корректирует степени свободы через уравнение Уэлча-Саттеруэйта). Уэлч — более безопасный дефолт, так как равенство дисперсий редко гарантировано, а цена перехода на Уэлча почти нулевая, если дисперсии всё же равны. Парные данные (один объект измерен дважды, например до/после) требуют парного t-теста на разностях, а не независимого двухвыборочного — парность убирает межсубъектную дисперсию и повышает мощность.',
+      minutes: 12,
+    },
+    {
+      title: 'Bootstrap · confidence interval',
+      prompt: 'Explain how to bootstrap a 95% CI for median transaction value. What can go wrong with dependent observations?',
+      hint: 'Resample units, not rows, when rows share a customer.',
+      theoryEn: 'Bootstrap CI: resample the observed data WITH replacement many times (e.g. 10,000x), compute the statistic (median) on each resample, then take the 2.5th/97.5th percentiles of that distribution as the 95% CI — no distributional assumption needed. The failure mode: if observations are not independent (e.g. multiple transactions per customer), resampling individual rows understates the true variance — you must resample whole customers (clusters), not rows, to preserve the real dependence structure.',
+      theoryRu: 'Бутстрап-ДИ: пересэмплируем исходные данные С возвращением много раз (например, 10 000), считаем статистику (медиану) на каждой копии, берём 2.5-й/97.5-й перцентили этого распределения как 95% ДИ — без предположений о распределении. Ловушка: если наблюдения не независимы (например, несколько транзакций на клиента), пересэмплирование строк по отдельности занижает истинную дисперсию — нужно пересэмплировать целых клиентов (кластеры), а не строки, чтобы сохранить реальную структуру зависимости.',
+      minutes: 15,
+    },
+    {
+      title: 'Experiment design · banking',
+      prompt: 'Design an experiment for a new credit-limit recommendation. Choose unit, primary metric, guardrails, duration, and risks.',
+      hint: 'Think defaults, revenue, approval rate, interference and delayed outcomes.',
+      theoryEn: 'A full experiment design needs: (1) randomization unit — usually the customer, not the request, to avoid interference; (2) primary metric — one number the decision hinges on, decided BEFORE launch; (3) guardrail metrics — things that must not get worse (complaints, revenue); (4) duration/power — sample size from a power calculation, not a gut feeling; (5) risks — delayed outcomes (defaults surface months later), interference between units, and regulatory/fairness constraints specific to lending.',
+      theoryRu: 'Полный дизайн эксперимента требует: (1) единица рандомизации — обычно клиент, а не запрос, чтобы избежать интерференции; (2) основная метрика — одно число, от которого зависит решение, выбранное ДО запуска; (3) guardrail-метрики — то, что не должно ухудшиться (жалобы, выручка); (4) длительность/мощность — размер выборки из расчёта мощности, а не на глаз; (5) риски — отложенные исходы (дефолты проявляются месяцы спустя), интерференция между единицами, регуляторные и fairness-ограничения кредитования.',
+      minutes: 20,
+    },
+  ],
+  SQL: [
+    {
+      title: 'Window functions · retention',
+      prompt: 'Given payments(user_id, paid_at, amount), return each user’s first payment, previous payment, and days since previous payment.',
+      hint: 'MIN() OVER and LAG() OVER (PARTITION BY user_id ORDER BY paid_at).',
+      theoryEn: 'Window functions compute a per-row value across a set of related rows WITHOUT collapsing them (unlike GROUP BY). MIN(paid_at) OVER (PARTITION BY user_id) gives each row that user\'s first payment date. LAG(paid_at) OVER (PARTITION BY user_id ORDER BY paid_at) gives the previous row\'s value within the same partition — subtract from the current row for days-since-previous. PARTITION BY resets the window per group; ORDER BY inside the window controls what "previous/next" means.',
+      theoryRu: 'Оконные функции считают значение для каждой строки по набору связанных строк БЕЗ схлопывания (в отличие от GROUP BY). MIN(paid_at) OVER (PARTITION BY user_id) — дата первого платежа этого пользователя в каждой строке. LAG(paid_at) OVER (PARTITION BY user_id ORDER BY paid_at) — значение предыдущей строки в том же разделе — вычесть из текущей, чтобы получить дни с прошлого платежа. PARTITION BY сбрасывает окно по группам, ORDER BY внутри окна задаёт, что значит «предыдущий/следующий».',
+      minutes: 18,
+    },
+    {
+      title: 'WITH · cohort quality',
+      prompt: 'Compute month-1 repeat-payment rate by acquisition month. State the grain of every CTE before writing SQL.',
+      hint: 'Build user cohort → activity month → aggregate. Protect against duplicate rows.',
+      theoryEn: 'A CTE (WITH clause) names an intermediate result so a multi-step query reads top-to-bottom instead of nesting subqueries inside subqueries. Before writing SQL, state the GRAIN of each CTE out loud: "one row per user", "one row per user per month" — most cohort bugs come from an accidental grain change (a JOIN silently fans one user-row into N payment-rows) that is not caught until the final aggregate is wrong. CTEs help readability; they do not automatically fix a grain mistake.',
+      theoryRu: 'CTE (WITH) даёт имя промежуточному результату, чтобы многошаговый запрос читался сверху вниз, а не вложенными подзапросами. Перед написанием SQL проговорите GRAIN (гранулярность) каждого CTE: «одна строка на пользователя», «одна строка на пользователя в месяц» — большинство багов в когортах из-за незаметной смены гранулярности (JOIN размножает одну строку пользователя в N строк платежей), которая всплывает только в финальной агрегации. CTE улучшают читаемость, но не исправляют ошибку в grain автоматически.',
+      minutes: 22,
+    },
+    {
+      title: 'JOIN · missing customers',
+      prompt: 'Find customers who applied for credit but have no decision. Explain why LEFT JOIN + IS NULL is safer than NOT IN here.',
+      hint: 'NULL semantics make NOT IN surprising.',
+      theoryEn: 'LEFT JOIN customers to decisions and filter WHERE decision.id IS NULL — finds customers with no matching decision row. NOT IN (SELECT customer_id FROM decisions) looks equivalent but is dangerous: if the subquery returns even one NULL customer_id, NOT IN returns zero rows for the ENTIRE query (NULL breaks all comparisons, including != and NOT IN). LEFT JOIN + IS NULL does not have this trap, which is why it is the standard idiom for "exists in A but not B".',
+      theoryRu: 'LEFT JOIN клиентов к решениям и фильтр WHERE decision.id IS NULL — находит клиентов без соответствующего решения. NOT IN (SELECT customer_id FROM decisions) выглядит эквивалентно, но опасно: если подзапрос вернёт хотя бы один NULL customer_id, NOT IN вернёт ноль строк для ВСЕГО запроса (NULL ломает все сравнения, включая != и NOT IN). У LEFT JOIN + IS NULL этой ловушки нет — поэтому это стандартная идиома для «есть в A, но нет в B».',
+      minutes: 12,
+    },
+    {
+      title: 'Ranking · top products',
+      prompt: 'Return the top 3 products by revenue inside each category, including ties.',
+      hint: 'Aggregate first, then DENSE_RANK by category.',
+      theoryEn: 'Aggregate first (SUM revenue per product per category), THEN rank — ranking raw unaggregated rows gives the wrong answer. DENSE_RANK() OVER (PARTITION BY category ORDER BY revenue DESC) assigns ranks with NO gaps after ties (two products tied for #1 both get rank 1, next gets rank 2) — contrast with RANK(), which would skip to 3. Filter WHERE rank <= 3 in an outer query or CTE, since a window function cannot be filtered directly in its own SELECT\'s WHERE clause.',
+      theoryRu: 'Сначала агрегируем (SUM выручки по продукту в категории), ПОТОМ ранжируем — ранжирование сырых неагрегированных строк даёт неверный ответ. DENSE_RANK() OVER (PARTITION BY category ORDER BY revenue DESC) даёт ранги без пропусков после связей (два продукта на 1-м месте оба получают ранг 1, следующий — ранг 2) — в отличие от RANK(), который пропустил бы до 3. Фильтр WHERE rank <= 3 делается во внешнем запросе или CTE, так как оконную функцию нельзя фильтровать напрямую в WHERE того же SELECT.',
+      minutes: 15,
+    },
+  ],
+  'Python & ML': [
+    {
+      title: 'pandas · customer features',
+      prompt: 'From transactions, create per-customer recency, frequency, mean amount, and 30-day spend without row-wise apply.',
+      hint: 'groupby/agg, named aggregations, datetime arithmetic.',
+      theoryEn: "groupby('customer_id').agg(...) with named aggregations — agg(recency=('date','max'), frequency=('date','count')) — computes multiple stats per group in one vectorized pass, no row-wise apply (an O(n) Python-level loop, slow). Recency needs datetime arithmetic: (reference_date - df.groupby('customer_id')['date'].transform('max')).dt.days. transform() keeps the original row count (broadcasts the group stat back to every row), unlike agg() which collapses to one row per group.",
+      theoryRu: "groupby('customer_id').agg(...) с именованными агрегациями — agg(recency=('date','max'), frequency=('date','count')) — считает несколько статистик на группу за один векторизованный проход, без построчного apply (O(n) цикл на уровне Python, медленно). Recency требует арифметики с датами: (reference_date - df.groupby('customer_id')['date'].transform('max')).dt.days. transform() сохраняет исходное число строк (транслирует статистику группы обратно на каждую строку), в отличие от agg(), который схлопывает до одной строки на группу.",
+      minutes: 18,
+    },
+    {
+      title: 'pandas · data quality',
+      prompt: 'A merge unexpectedly doubles the row count. Diagnose it and show checks that prevent silent many-to-many joins.',
+      hint: 'Check key uniqueness and use merge(validate=...).',
+      theoryEn: "A merge multiplying row count means the join key is not unique on at least one side — every match on the many side gets cross-joined against every match on the other many side. Check key uniqueness BEFORE merging: df['key'].duplicated().sum(), or use merge(..., validate='one_to_many') / 'one_to_one' — pandas raises a MergeError if the assumption is violated, catching the bug at merge time instead of silently in downstream numbers.",
+      theoryRu: "Умножение числа строк при merge означает, что ключ join не уникален хотя бы с одной стороны — каждое совпадение с «многие»-стороны кросс-джойнится с каждым совпадением с другой «многие»-стороны. Проверяйте уникальность ключа ДО merge: df['key'].duplicated().sum(), или используйте merge(..., validate='one_to_many') / 'one_to_one' — pandas выбросит MergeError при нарушении предположения, поймав баг на моменте merge, а не молча в итоговых цифрах.",
+      minutes: 14,
+    },
+    {
+      title: 'ML · credit validation',
+      prompt: 'Design validation for a default model. Why can a random split overestimate production quality?',
+      hint: 'Time split, leakage, delayed labels, stability across cohorts.',
+      theoryEn: "A random train/test split assumes rows are i.i.d. and the future looks like the past — false for time-ordered credit data. A time-based split (train on earlier applications, test on later ones) mimics production, where the model only ever sees the past. Leakage: including a feature computed using information not available at decision time (e.g. derived from the eventual default outcome) inflates test accuracy in a way that will not hold in production. Delayed labels (true default status is not known for months) mean the test set's 'ground truth' may itself be incomplete.",
+      theoryRu: 'Случайное разбиение train/test предполагает, что строки i.i.d. и будущее похоже на прошлое — неверно для кредитных данных с временной структурой. Разбиение по времени (train на ранних заявках, test на поздних) имитирует продакшн, где модель видит только прошлое. Утечка (leakage): признак, посчитанный с использованием информации, недоступной на момент решения (например, производный от итогового исхода дефолта), завышает точность на тесте так, что это не подтвердится в продакшне. Отложенные метки (истинный статус дефолта известен только через месяцы) означают, что «истина» в тестовом наборе сама может быть неполной.',
+      minutes: 20,
+    },
+    {
+      title: 'Boosting · imbalance',
+      prompt: 'For a 3% default target, compare ROC-AUC, PR-AUC, recall, precision and calibration. Which matter to the bank?',
+      hint: 'Tie metric choice to the decision threshold and cost of errors.',
+      theoryEn: 'With a 3% positive rate, ROC-AUC is misleadingly optimistic (it rewards ranking negatives correctly, and there are so many negatives that is easy) — PR-AUC is more informative because it focuses on how well you rank the rare positives. Recall = caught defaults / all actual defaults; precision = caught defaults / all flagged defaults — which one costs more (missing a default vs. false-flagging a good borrower) should set the decision threshold, not a default 0.5 cutoff. Calibration (do predicted probabilities match observed frequencies?) matters separately when the score feeds a downstream financial decision like pricing.',
+      theoryRu: 'При доле позитивного класса 3% ROC-AUC обманчиво оптимистичен (награждает за правильное ранжирование негативов, а их так много, что это легко) — PR-AUC информативнее, так как фокусируется на том, насколько хорошо вы ранжируете редкие позитивы. Recall = пойманные дефолты / все реальные дефолты; precision = пойманные дефолты / все помеченные как дефолт — банку важно, что дороже (пропустить дефолт или ложно пометить хорошего заёмщика), и это должно задавать порог решения, а не дефолтные 0.5. Калибровка (совпадают ли предсказанные вероятности с наблюдаемыми частотами) важна отдельно, когда скор используется для финансового решения вроде ценообразования.',
+      minutes: 18,
+    },
+  ],
+}
+
 export const HABIT_STACK = [
   { cue: 'Morning coffee', action: 'Open Mistake Log FIRST (not IDE)', duration: '2 min' },
   { cue: 'Timer starts', action: 'LeetCode FROG — hardest problem', duration: '25 min' },

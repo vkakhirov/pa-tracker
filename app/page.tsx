@@ -16,15 +16,17 @@ import { EatFrog } from '@/components/EatFrog'
 import { InterviewQBank } from '@/components/InterviewQBank'
 import { JobTracker } from '@/components/JobTracker'
 import { FocusLab } from '@/components/FocusLab'
+import { TheoryBank } from '@/components/TheoryBank'
 
 // Update manually when a gate is passed and you move to the next day
 const CURRENT_WEEK = 1
 const CURRENT_DAY = 3
 
-type Tab = 'focus' | 'dashboard' | 'interview' | 'jobs'
+type Tab = 'focus' | 'theory' | 'dashboard' | 'interview' | 'jobs'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'focus', label: 'Focus Lab' },
+  { id: 'theory', label: 'Theory' },
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'interview', label: 'Interview Bank' },
   { id: 'jobs',      label: 'Jobs' },
@@ -55,7 +57,7 @@ export default function Dashboard() {
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className="relative px-4 py-3 text-xs font-mono uppercase tracking-widest cursor-pointer transition-all duration-200"
             style={{ color: activeTab === tab.id ? 'var(--accent)' : 'var(--ink-faint)', background: 'transparent', border: 'none' }}>
-            {language === 'ru' ? ({ focus: 'Фокус', dashboard: 'План', interview: 'Вопросы', jobs: 'Вакансии' } as Record<Tab, string>)[tab.id] : tab.label}
+            {language === 'ru' ? ({ focus: 'Фокус', theory: 'Теория', dashboard: 'План', interview: 'Вопросы', jobs: 'Вакансии' } as Record<Tab, string>)[tab.id] : tab.label}
             {tab.id === 'jobs' && state.jobs.length > 0 && (
               <span className="ml-1.5 text-xs px-1.5 py-0.5 rounded-full font-mono"
                 style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>
@@ -73,6 +75,8 @@ export default function Dashboard() {
       </div>
 
       {activeTab === 'focus' && <FocusLab onSessionComplete={logSession} language={language} />}
+
+      {activeTab === 'theory' && <TheoryBank language={language} />}
 
       {activeTab === 'dashboard' && (
         <>
